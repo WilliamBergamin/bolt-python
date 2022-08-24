@@ -19,7 +19,7 @@ from slack_bolt.authorization.authorize import (
     CallableAuthorize,
 )
 from slack_bolt.error import BoltError, BoltUnhandledRequestError
-from ..function.Function import _Function
+from ..function.function import _Function
 from slack_bolt.lazy_listener.thread_runner import ThreadLazyListenerRunner
 from slack_bolt.listener.builtins import TokenRevocationListeners
 from slack_bolt.listener.custom_listener import CustomListener
@@ -794,28 +794,22 @@ class App:
 
         return __call__
 
-    # TODO not ideal because cant display the preview
-    @singledispatchmethod
-    def function(self, arg) -> Callable[..., Optional[Callable[..., Optional[BoltResponse]]]]:
-        raise NotImplementedError("Type not accepted for this function")
-
-    @function.register
-    def _(
+    def _function(
         self,
         function: _Function
     ) -> Callable[..., Optional[Callable[..., Optional[BoltResponse]]]]:
-        return self._register_listener(
-            function.function_listener.functions,
-            function.function_listener.primary_matcher,
-            function.function_listener.matchers,
-            function.function_listener.middleware,
-            function.function_listener.auto_acknowledgement
-        )
+        for listener in function.listeners:
+            self._register_listener(
+                listener.functions,
+                listener.primary_matcher,
+                listener.matchers,
+                listener.middleware,
+                listener.auto_acknowledgement
+            )
 
-    @function.register
-    def _(
+    def function(
         self,
-        callback_id: str,
+        callback_id: Union[str, _Function],
         matchers: Optional[Sequence[Callable[..., bool]]] = None,
         middleware: Optional[Sequence[Union[Callable, Middleware]]] = None,
     ) -> Callable[..., Optional[Callable[..., Optional[BoltResponse]]]]:
@@ -846,6 +840,8 @@ class App:
             middleware: A list of lister middleware functions.
                 Only when all the middleware call `next()` method, the listener function can be invoked.
         """
+        if isinstance(callback_id, _Function):
+            return self._function(callback_id)
 
         def __call__(*args, **kwargs):
             functions = self._to_listener_functions(kwargs) if kwargs else list(args)

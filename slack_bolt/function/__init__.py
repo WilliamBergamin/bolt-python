@@ -1,6 +1,6 @@
-from .Function import Function
+from .function import function
 
 
 __all__ = [
-    "Function",
+    "function",
 ]

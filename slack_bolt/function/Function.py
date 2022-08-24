@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from typing import List, Union, Pattern, Callable, Dict, Optional, Sequence, Any
 
 from slack_bolt.listener_matcher import builtins as builtin_matchers
@@ -9,13 +8,20 @@ from slack_bolt.middleware import Middleware
 from slack_bolt.listener_matcher import ListenerMatcher
 
 
-@dataclass(repr=True, eq=False)
-class Listener:
-    functions: Sequence[Callable[..., Optional[BoltResponse]]]
-    primary_matcher: ListenerMatcher
-    matchers: Optional[Sequence[Callable[..., bool]]]
-    middleware: Optional[Sequence[Union[Callable, Middleware]]]
-    auto_acknowledgement: bool = False,
+class _Listener:
+    def __init__(
+        self,
+        functions: Sequence[Callable[..., Optional[BoltResponse]]],
+        primary_matcher: ListenerMatcher,
+        matchers: Optional[Sequence[Callable[..., bool]]],
+        middleware: Optional[Sequence[Union[Callable, Middleware]]],
+        auto_acknowledgement: bool = False
+    ):
+        self.functions = functions
+        self.primary_matcher = primary_matcher
+        self.matchers = matchers
+        self.middleware = middleware
+        self.auto_acknowledgement = auto_acknowledgement
 
 
 # TDOD this is a duplicate function in App
@@ -36,9 +42,7 @@ class _Function:
     callables as instance methods.
     """
 
-    function_listener: Listener = None
-    action_listener: List = []
-    view_listener: List = []
+    listeners: List[_Listener] = []
 
     def __init__(
             self,
@@ -59,7 +63,7 @@ class _Function:
         functions = _to_listener_functions(kwargs) if kwargs else list(args)
         primary_matcher = builtin_matchers.function_event(
             callback_id=self.callback_id, base_logger=None)  # TODO logger is None
-        self.function_listener = Listener(list(functions), primary_matcher, self.matchers, self.middleware, True)
+        self.listeners.append(_Listener(list(functions), primary_matcher, self.matchers, self.middleware, True))
         return self
 
     def action(
@@ -76,7 +80,7 @@ class _Function:
 
         def __call__(*args, **kwargs):
             print("set up action listerner")
-            print(self.action_listener)
+            print(self.listeners)
 
         return __call__
 
@@ -85,8 +89,13 @@ class _Function:
         return getattr(self.func, '__isabstractmethod__', False)
 
 
-def Function(func=None, callback_id: Union[str, Pattern] = None):
+def function(
+    func=None,
+    callback_id: Union[str, Pattern] = None,
+    matchers: Optional[Sequence[Callable[..., bool]]] = None,
+    middleware: Optional[Sequence[Union[Callable, Middleware]]] = None
+):
     if func:
         raise Exception("Missing callback_id")
     else:
-        return _Function(func, callback_id)
+        return _Function(func, callback_id, matchers, middleware)
