@@ -19,7 +19,7 @@ from slack_bolt.authorization.authorize import (
     CallableAuthorize,
 )
 from slack_bolt.error import BoltError, BoltUnhandledRequestError
-from ..function.function import _Function
+from slack_bolt.function import Function
 from slack_bolt.lazy_listener.thread_runner import ThreadLazyListenerRunner
 from slack_bolt.listener.builtins import TokenRevocationListeners
 from slack_bolt.listener.custom_listener import CustomListener
@@ -83,7 +83,6 @@ from slack_bolt.util.utils import (
 from slack_bolt.workflows.step import WorkflowStep, WorkflowStepMiddleware
 from slack_bolt.workflows.step.step import WorkflowStepBuilder
 
-from functools import singledispatchmethod
 
 class App:
     def __init__(
@@ -794,22 +793,9 @@ class App:
 
         return __call__
 
-    def _function(
-        self,
-        function: _Function
-    ) -> Callable[..., Optional[Callable[..., Optional[BoltResponse]]]]:
-        for listener in function.listeners:
-            self._register_listener(
-                listener.functions,
-                listener.primary_matcher,
-                listener.matchers,
-                listener.middleware,
-                listener.auto_acknowledgement
-            )
-
     def function(
         self,
-        callback_id: Union[str, _Function],
+        callback_id: Union[str, Function],
         matchers: Optional[Sequence[Callable[..., bool]]] = None,
         middleware: Optional[Sequence[Union[Callable, Middleware]]] = None,
     ) -> Callable[..., Optional[Callable[..., Optional[BoltResponse]]]]:
@@ -840,13 +826,10 @@ class App:
             middleware: A list of lister middleware functions.
                 Only when all the middleware call `next()` method, the listener function can be invoked.
         """
-        if isinstance(callback_id, _Function):
-            return self._function(callback_id)
 
         def __call__(*args, **kwargs):
             functions = self._to_listener_functions(kwargs) if kwargs else list(args)
-            primary_matcher = builtin_matchers.function_event(callback_id=callback_id, base_logger=self._base_logger)
-            return self._register_listener(list(functions), primary_matcher, matchers, middleware, True)
+            return Function(self._register_listener, self._base_logger, list(functions), callback_id, matchers, middleware)
 
         return __call__
 

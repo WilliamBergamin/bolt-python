@@ -1,27 +1,10 @@
 from typing import List, Union, Pattern, Callable, Dict, Optional, Sequence, Any
+from logging import Logger
 
 from slack_bolt.listener_matcher import builtins as builtin_matchers
 
-from slack_bolt.request import BoltRequest
 from slack_bolt.response import BoltResponse
 from slack_bolt.middleware import Middleware
-from slack_bolt.listener_matcher import ListenerMatcher
-
-
-class _Listener:
-    def __init__(
-        self,
-        functions: Sequence[Callable[..., Optional[BoltResponse]]],
-        primary_matcher: ListenerMatcher,
-        matchers: Optional[Sequence[Callable[..., bool]]],
-        middleware: Optional[Sequence[Union[Callable, Middleware]]],
-        auto_acknowledgement: bool = False
-    ):
-        self.functions = functions
-        self.primary_matcher = primary_matcher
-        self.matchers = matchers
-        self.middleware = middleware
-        self.auto_acknowledgement = auto_acknowledgement
 
 
 # TDOD this is a duplicate function in App
@@ -36,41 +19,30 @@ def _to_listener_functions(
     return None
 
 
-class _Function:
-    """Single-dispatch generic method descriptor.
-    Supports wrapping existing descriptors and handles non-descriptor
-    callables as instance methods.
-    """
-
-    listeners: List[_Listener] = []
+class Function:
 
     def __init__(
-            self,
-            func,
-            callback_id: Union[str, Pattern],
-            matchers: Optional[Sequence[Callable[..., bool]]] = None,
-            middleware: Optional[Sequence[Union[Callable, Middleware]]] = None):
-        self.callback_id = callback_id
-        self.matchers = matchers
-        self.middleware = middleware
-        self.func = func
-
-    def __call__(
         self,
-        *args,
-        **kwargs,
-    ) -> Callable[..., Optional[Callable[..., Optional[BoltResponse]]]]:
-        functions = _to_listener_functions(kwargs) if kwargs else list(args)
-        primary_matcher = builtin_matchers.function_event(
-            callback_id=self.callback_id, base_logger=None)  # TODO logger is None
-        self.listeners.append(_Listener(list(functions), primary_matcher, self.matchers, self.middleware, True))
-        return self
+        _register_listener: Callable[..., Optional[Callable[..., Optional[BoltResponse]]]],
+        _base_logger: Logger,
+        functions: List[Callable[..., Optional[Callable[..., Optional[BoltResponse]]]]],
+        callback_id: Union[str, Pattern],
+        matchers: Optional[Sequence[Callable[..., bool]]] = None,
+        middleware: Optional[Sequence[Union[Callable, Middleware]]] = None
+    ):
+        self._register_listener = _register_listener
+        self._base_logger = _base_logger
+        self.callback_id = callback_id
+
+        primary_matcher = builtin_matchers.function_event(callback_id=self.callback_id, base_logger=_base_logger)
+        self.function = self._register_listener(functions, primary_matcher, matchers, middleware, True)
+
+    def __call__(self, *args, **kwargs) -> Optional[Callable[..., Optional[BoltResponse]]]:
+        return self.function(*args, **kwargs)
 
     def action(
         self,
-        cls,
-        method=None,
-        constraints: Union[str, Pattern, Dict[str, Union[str, Pattern]]] = None,
+        constraints: Union[str, Pattern, Dict[str, Union[str, Pattern]]],
         matchers: Optional[Sequence[Callable[..., bool]]] = None,
         middleware: Optional[Sequence[Union[Callable, Middleware]]] = None,
     ) -> Callable[..., Optional[Callable[..., Optional[BoltResponse]]]]:
@@ -79,23 +51,10 @@ class _Function:
         """
 
         def __call__(*args, **kwargs):
-            print("set up action listerner")
-            print(self.listeners)
+            print("action reistered")
 
         return __call__
 
     @property
     def __isabstractmethod__(self):
-        return getattr(self.func, '__isabstractmethod__', False)
-
-
-def function(
-    func=None,
-    callback_id: Union[str, Pattern] = None,
-    matchers: Optional[Sequence[Callable[..., bool]]] = None,
-    middleware: Optional[Sequence[Union[Callable, Middleware]]] = None
-):
-    if func:
-        raise Exception("Missing callback_id")
-    else:
-        return _Function(func, callback_id, matchers, middleware)
+        return getattr(self.function, '__isabstractmethod__', False)
