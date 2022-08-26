@@ -64,6 +64,7 @@ from slack_bolt.middleware import (
     IgnoringSelfEvents,
     CustomMiddleware,
 )
+from slack_bolt.middleware.function_listener_matches import FunctionListenerToken
 from slack_bolt.middleware.message_listener_matches import MessageListenerMatches
 from slack_bolt.middleware.middleware_error_handler import (
     DefaultMiddlewareErrorHandler,
@@ -79,6 +80,7 @@ from slack_bolt.util.utils import (
     create_web_client,
     get_boot_message,
     get_name_for_callable,
+    create_copy
 )
 from slack_bolt.workflows.step import WorkflowStep, WorkflowStepMiddleware
 from slack_bolt.workflows.step.step import WorkflowStepBuilder
@@ -826,7 +828,8 @@ class App:
             middleware: A list of lister middleware functions.
                 Only when all the middleware call `next()` method, the listener function can be invoked.
         """
-
+        middleware = list(middleware) if middleware else []
+        middleware.insert(0, FunctionListenerToken())
         def __call__(*args, **kwargs):
             functions = self._to_listener_functions(kwargs) if kwargs else list(args)
             return Function(self._register_listener, self._base_logger, list(functions), callback_id, matchers, middleware)
@@ -1249,7 +1252,7 @@ class App:
         req.context["token"] = self._token
         if self._token is not None:
             # This WebClient instance can be safely singleton
-            req.context["client"] = self._client
+            req.context["client"] = create_copy(self._client)
         else:
             # Set a new dedicated instance for this request
             client_per_request: WebClient = WebClient(
