@@ -831,26 +831,7 @@ class App:
                 Only when all the middleware call `next()` method, the listener function can be invoked.
         """
 
-        class SlackFunctionDecorator(SlackFunction):
-            def __init__(
-                self,
-                register_listener: Callable[..., Optional[Callable[..., Optional[BoltResponse]]]],
-                base_logger: logging.Logger,
-                callback_id: Union[str, Pattern],
-                matchers: Optional[Sequence[Callable[..., bool]]] = None,
-                middleware: Optional[Sequence[Union[Callable, Middleware]]] = None,
-            ):
-                super().__init__(register_listener, base_logger, callback_id)
-                self.matchers = matchers
-                self.middleware = middleware
-
-            def __call__(self, *args, **kwargs):
-                if self.func is not None:
-                    return super().__call__(*args, **kwargs)
-                functions = extract_listener_callables(kwargs) if kwargs else list(args)
-                return self.register_listener(list(functions), self.matchers, self.middleware)
-
-        return SlackFunctionDecorator(self._register_listener, self._base_logger, callback_id, matchers, middleware)
+        return SlackFunction(self._register_listener, self._base_logger, callback_id, matchers, middleware)
 
     # -------------------------
     # slash commands
