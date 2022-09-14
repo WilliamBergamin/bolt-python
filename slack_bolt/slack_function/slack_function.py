@@ -20,16 +20,20 @@ class SlackFunction:
         callback_id: str,
         matchers: Optional[Sequence[Callable[..., bool]]] = None,
         middleware: Optional[Sequence[Union[Callable, Middleware]]] = None,
+        asyncio: bool = False,
     ):
         self._register_listener = register_listener
         self._base_logger = base_logger
         self.callback_id = callback_id
         self.matchers = matchers
         self.middleware = middleware
+        self.asyncio = asyncio
 
     def register_listener(self, *args, **kwargs) -> None:
         functions = extract_listener_callables(kwargs) if kwargs else list(args)
-        primary_matcher = builtin_matchers.function_event(callback_id=self.callback_id, base_logger=self._base_logger)
+        primary_matcher = builtin_matchers.function_event(
+            callback_id=self.callback_id, base_logger=self._base_logger, asyncio=self.asyncio
+        )
         self.func = self._register_listener(functions, primary_matcher, self.matchers, self.middleware, True)
 
     def __call__(self, *args, **kwargs) -> Optional[Union[BoltResponse, Callable]]:
@@ -72,7 +76,9 @@ class SlackFunction:
 
         def __call__(*args, **kwargs):
             functions = extract_listener_callables(kwargs) if kwargs else list(args)
-            primary_matcher = builtin_matchers.function_action(self.callback_id, constraints, base_logger=self._base_logger)
+            primary_matcher = builtin_matchers.function_action(
+                self.callback_id, constraints, base_logger=self._base_logger, asyncio=self.asyncio
+            )
             return self._register_listener(list(functions), primary_matcher, matchers, middleware)
 
         return __call__
@@ -122,7 +128,7 @@ class SlackFunction:
             sample_view_func.view("view_1")(handle_submission)
 
         To learn available arguments for middleware/listeners, see `slack_bolt.kwargs_injection.args`'s API document.
-        
+
         Args:
             constraints: The conditions that match a request payload
             matchers: A list of listener matcher functions.
@@ -133,7 +139,9 @@ class SlackFunction:
 
         def __call__(*args, **kwargs):
             functions = extract_listener_callables(kwargs) if kwargs else list(args)
-            primary_matcher = builtin_matchers.function_view(self.callback_id, constraints, base_logger=self._base_logger)
+            primary_matcher = builtin_matchers.function_view(
+                self.callback_id, constraints, base_logger=self._base_logger, asyncio=self.asyncio
+            )
             return self._register_listener(list(functions), primary_matcher, matchers, middleware)
 
         return __call__
@@ -149,7 +157,7 @@ class SlackFunction:
         def __call__(*args, **kwargs):
             functions = extract_listener_callables(kwargs) if kwargs else list(args)
             primary_matcher = builtin_matchers.function_view_submission(
-                self.callback_id, constraints, base_logger=self._base_logger
+                self.callback_id, constraints, base_logger=self._base_logger, asyncio=self.asyncio
             )
             return self._register_listener(list(functions), primary_matcher, matchers, middleware)
 
@@ -166,7 +174,7 @@ class SlackFunction:
         def __call__(*args, **kwargs):
             functions = extract_listener_callables(kwargs) if kwargs else list(args)
             primary_matcher = builtin_matchers.function_view_closed(
-                self.callback_id, constraints, base_logger=self._base_logger
+                self.callback_id, constraints, base_logger=self._base_logger, asyncio=self.asyncio
             )
             return self._register_listener(list(functions), primary_matcher, matchers, middleware)
 
