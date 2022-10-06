@@ -1,4 +1,3 @@
-import os
 import json
 
 from slack_bolt.manifest.manifest import Manifest
@@ -20,19 +19,7 @@ from slack_bolt.manifest.models.manifest_schema import (
 
 
 class TestManifest:
-
-    working_directory = "tests/slack_bolt/cli/test_app"
-
-    def setup_method(self, method):
-        os.environ["SLACK_CLI_XOXB"] = "xoxb-xxx"
-        os.environ["SLACK_CLI_XAPP"] = "xapp-xxx"
-
-    def teardown_method(self, method):
-        os.environ.pop("SLACK_CLI_XOXB", None)
-        os.environ.pop("SLACK_CLI_XAPP", None)
-        os.environ.pop("SLACK_CLI_CUSTOM_FILE_PATH", None)
-
-    def test_manifest(self, capsys):
+    def test_manifest(self):
         features = ManifestFeaturesSchema(
             app_home=ManifestAppHomeSchema(
                 home_tab_enabled=True, messages_tab_enabled=True, messages_tab_read_only_enabled=True
@@ -68,6 +55,7 @@ class TestManifest:
             ),
             outgoing_domains=[],
         )
+        print(json.dumps(manifest.to_dict(), indent=4))
         assert manifest.to_dict() == sample
 
 

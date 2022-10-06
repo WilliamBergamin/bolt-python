@@ -134,10 +134,10 @@ class Manifest:
             workflows=workflows,
             functions=functions,
         )
-        return to_dict(manifest)
+        return _to_dict(manifest)
 
 
-def to_dict(obj: Schema):
+def _to_dict(obj: Union[Schema, Dict, List, Enum, int, float, str, bool]) -> Dict:
 
     if isinstance(obj, (int, float, str, bool)):
         return obj
@@ -150,11 +150,11 @@ def to_dict(obj: Schema):
         if value is None:
             continue
         elif isinstance(value, dict):
-            dictionary[key] = to_dict(value)
+            dictionary[key] = _to_dict(value)
             continue
         elif isinstance(value, list):
-            dictionary[key] = [to_dict(item) for item in value]
+            dictionary[key] = [_to_dict(item) for item in value]
             continue
-        dictionary[key] = to_dict(value)
+        dictionary[key] = _to_dict(value)
         continue
     return dictionary
