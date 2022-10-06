@@ -115,8 +115,8 @@ setuptools.setup(
     ],
     python_requires=">=3.6",
     entry_points={
-        'console_scripts': [
-            'bolt-get-hooks=slack_bolt.cli.get_hooks:main',
+        "console_scripts": [
+            "bolt-get-hooks=slack_bolt.cli.get_hooks:main",
         ]
     },
 )
