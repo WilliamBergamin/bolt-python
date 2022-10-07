@@ -1,6 +1,6 @@
 import json
 
-from slack_bolt.manifest.manifest import Manifest
+from slack_bolt.manifest.manifest import FunctionDefinition, Manifest, WorkflowDefinition
 from slack_bolt.manifest.models.manifest_schema import (
     ManifestAppHomeSchema,
     ManifestBotUserSchema,
@@ -10,9 +10,13 @@ from slack_bolt.manifest.models.manifest_schema import (
     ManifestInteractivitySchema,
     ManifestMetadataSchema,
     ManifestOauthConfigSchema,
+    ManifestParameters,
     ManifestSettingsSchema,
     ManifestShortcutSchema,
     ManifestSlashCommandSchema,
+    ManifestWorkflowSchema,
+    ManifestWorkflowStepSchema,
+    ParameterDefinition,
     Scopes,
     ShortcutType,
 )
@@ -55,11 +59,109 @@ class TestManifest:
             ),
             outgoing_domains=[],
         )
-        print(json.dumps(manifest.to_dict(), indent=4))
-        assert manifest.to_dict() == sample
+        assert manifest.to_dict() == sample_base_manifest
+
+    def test_manifest_with_workflow(self):
+        func = FunctionDefinition(
+            callback_id="sample_function",
+            description="A sample function",
+            input_parameters=ManifestParameters(
+                properties={"message": ParameterDefinition(type="string", description="Message to be posted")},
+                required=["message"],
+            ),
+            output_parameters=ManifestParameters(
+                properties={"updatedMsg": ParameterDefinition(type="string", description="Updated message to be posted")},
+                required=["updatedMsg"],
+            ),
+            title="Sample function",
+        )
+        workflow = WorkflowDefinition(
+            callback_id="sample_workflow",
+            description="A sample workflow",
+            input_parameters=ManifestParameters(
+                {
+                    "interactivity": ParameterDefinition(type="slack#/types/interactivity"),
+                    "channel": ParameterDefinition(type="slack#/types/channel_id"),
+                },
+                required=["interactivity"],
+            ),
+            title="Sample workflow",
+        )
+
+        workflow.append_step(
+            ManifestWorkflowStepSchema(
+                function_id="slack#/functions/open_form",
+                id="0",
+                inputs={
+                    "title": "Send message to channel",
+                    "submit_label": "Send message",
+                    "description": "Send a message to a channel",
+                    "interactivity": "{{inputs.interactivity}}",
+                    "fields": {
+                        "elements": [
+                            {"name": "message", "title": "Message", "type": "string", "long": True},
+                            {
+                                "name": "channel",
+                                "title": "Channel to send message to",
+                                "type": "slack#/types/channel_id",
+                                "default": "{{inputs.channel}}",
+                            },
+                        ],
+                        "required": ["channel", "message"],
+                    },
+                },
+            )
+        )
+
+        workflow.append_step(func, inputs={"message": "{{steps.0.fields.message}}"})
+
+        workflow.append_step(
+            ManifestWorkflowStepSchema(
+                function_id="slack#/functions/send_message",
+                id="0",
+                inputs={"channel_id": "{{steps.0.fields.channel}}", "message": "{{steps.1.updatedMsg}}"},
+            )
+        )
+        
+        manifest = Manifest(
+            display_information=ManifestDisplayInformationSchema(name="Bolt Template App"),
+            metadata=ManifestMetadataSchema(major_version=2, minor_version=2),
+            features=ManifestFeaturesSchema(
+                app_home=ManifestAppHomeSchema(
+                    home_tab_enabled=True, messages_tab_enabled=True, messages_tab_read_only_enabled=True
+                ),
+                bot_user=ManifestBotUserSchema(always_online=False, display_name="Bolt Template App"),
+                shortcuts=[
+                    ManifestShortcutSchema(
+                        callback_id="sample_shortcut_id",
+                        name="Run sample shortcut",
+                        description="Runs a sample shortcut",
+                        type=ShortcutType.GLOBAL,
+                    )
+                ],
+                slash_commands=[
+                    ManifestSlashCommandSchema(
+                        command="/sample-command", description="Runs a sample command", should_escape=False
+                    )
+                ],
+            ),
+            oauth_config=ManifestOauthConfigSchema(
+                scopes=Scopes(bot=["channels:history", "chat:write", "commands", "chat:write.public"]),
+            ),
+            settings=ManifestSettingsSchema(
+                event_subscriptions=ManifestEventSubscriptionsSchema(bot_events=["app_home_opened", "message.channels"]),
+                interactivity=ManifestInteractivitySchema(is_enabled=True),
+                org_deploy_enabled=True,
+                socket_mode_enabled=True,
+                token_rotation_enabled=False,
+            ),
+            outgoing_domains=[],
+            workflows=[workflow],
+        )
+        assert manifest.to_dict() == {**sample_base_manifest, **sample_functions, **sample_workflows}
 
 
-sample = {
+sample_base_manifest = {
     "metadata": {"major_version": 2, "minor_version": 2},
     "display_information": {"name": "Bolt Template App"},
     "features": {
@@ -86,7 +188,7 @@ sample = {
     "outgoing_domains": [],
 }
 
-functions_workflows = {
+sample_functions = {
     "functions": {
         "sample_function": {
             "title": "Sample function",
@@ -99,18 +201,11 @@ functions_workflows = {
                 "properties": {"updatedMsg": {"type": "string", "description": "Updated message to be posted"}},
                 "required": ["updatedMsg"],
             },
-        },
-        "sample_view_function": {
-            "title": "Sample view function",
-            "description": "A sample function thats uses views",
-            "input_parameters": {"properties": {"interactivity": {"type": "slack#/types/interactivity"}}},
-            "output_parameters": {
-                "properties": {"markdown": {"type": "string", "description": "message to be send to slack"}},
-                "required": ["markdown"],
-            },
-        },
+        }
     },
-    "types": {},
+}
+
+sample_workflows = {
     "workflows": {
         "sample_workflow": {
             "title": "Sample workflow",
@@ -149,6 +244,7 @@ functions_workflows = {
                     "id": "1",
                     "function_id": "#/functions/sample_function",
                     "inputs": {"message": "{{steps.0.fields.message}}"},
+                    "type": "function",
                 },
                 {
                     "id": "2",
@@ -156,29 +252,6 @@ functions_workflows = {
                     "inputs": {"channel_id": "{{steps.0.fields.channel}}", "message": "{{steps.1.updatedMsg}}"},
                 },
             ],
-        },
-        "sample_view_workflow": {
-            "title": "Sample view workflow",
-            "description": "A sample view workflow",
-            "input_parameters": {
-                "properties": {
-                    "interactivity": {"type": "slack#/types/interactivity"},
-                    "channel": {"type": "slack#/types/channel_id"},
-                },
-                "required": ["interactivity", "channel"],
-            },
-            "steps": [
-                {
-                    "id": "0",
-                    "function_id": "#/functions/sample_view_function",
-                    "inputs": {"interactivity": "{{inputs.interactivity}}"},
-                },
-                {
-                    "id": "1",
-                    "function_id": "slack#/functions/send_message",
-                    "inputs": {"channel_id": "{{inputs.channel}}", "message": "{{steps.0.markdown}}"},
-                },
-            ],
-        },
+        }
     },
 }

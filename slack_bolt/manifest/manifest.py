@@ -1,3 +1,4 @@
+from readline import insert_text
 from typing import Optional, List, Dict, Union
 from enum import Enum
 
@@ -55,21 +56,23 @@ class WorkflowDefinition:
         input_parameters: Optional[ManifestParameters] = None,
         title: Optional[str] = None,
     ) -> None:
-        self.callbak_id = callback_id
+        self.callback_id = callback_id
         self.description = description
         self.input_parameters = input_parameters
         self.title = title
 
     def _append_function_definition_step(self, function: FunctionDefinition, inputs: Optional[Dict] = {}):
         self._steps.append(
-            ManifestWorkflowStepSchema(function_id=function.callback_id, id=None, inputs=inputs, type=StepType.FUNCTION)
+            ManifestWorkflowStepSchema(
+                function_id=f"#/functions/{function.callback_id}", id=None, inputs=inputs, type=StepType.FUNCTION
+            )
         )
         self._functions.append(function)
 
     def append_step(self, function: Union[ManifestWorkflowStepSchema, FunctionDefinition], inputs: Optional[Dict] = {}):
         if isinstance(function, ManifestWorkflowStepSchema):
             self._steps.append(function)
-        elif isinstance(function, ManifestWorkflowStepSchema):
+        elif isinstance(function, FunctionDefinition):
             self._append_function_definition_step(function, inputs)
 
     def _set_step_ids(self) -> None:
@@ -116,7 +119,7 @@ class Manifest:
             else None
         )
         workflows = (
-            {workflow.callbak_id: workflow.to_manifest_workflow_schema() for workflow in self.workflows}
+            {workflow.callback_id: workflow.to_manifest_workflow_schema() for workflow in self.workflows}
             if self.workflows
             else None
         )
@@ -143,18 +146,7 @@ def _to_dict(obj: Union[Schema, Dict, List, Enum, int, float, str, bool]) -> Dic
         return obj
     elif isinstance(obj, Enum):
         return obj.value
+    elif isinstance(obj, list):
+        return [_to_dict(item) for item in obj]
 
-    dictionary = {}
-    for key in obj.keys():
-        value = obj.get(key)
-        if value is None:
-            continue
-        elif isinstance(value, dict):
-            dictionary[key] = _to_dict(value)
-            continue
-        elif isinstance(value, list):
-            dictionary[key] = [_to_dict(item) for item in value]
-            continue
-        dictionary[key] = _to_dict(value)
-        continue
-    return dictionary
+    return {key: _to_dict(obj.get(key)) for key in obj.keys() if obj.get(key) is not None}
