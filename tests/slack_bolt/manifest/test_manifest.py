@@ -1,6 +1,4 @@
-import json
-
-from slack_bolt.manifest.manifest import FunctionDefinition, Manifest, WorkflowDefinition
+from slack_bolt.manifest.manifest import FunctionDefinition, Manifest, WorkflowDefinition, WorkflowStepDefinition
 from slack_bolt.manifest.models.manifest_schema import (
     ManifestAppHomeSchema,
     ManifestBotUserSchema,
@@ -14,8 +12,6 @@ from slack_bolt.manifest.models.manifest_schema import (
     ManifestSettingsSchema,
     ManifestShortcutSchema,
     ManifestSlashCommandSchema,
-    ManifestWorkflowSchema,
-    ManifestWorkflowStepSchema,
     ParameterDefinition,
     Scopes,
     ShortcutType,
@@ -75,6 +71,7 @@ class TestManifest:
             ),
             title="Sample function",
         )
+
         workflow = WorkflowDefinition(
             callback_id="sample_workflow",
             description="A sample workflow",
@@ -89,40 +86,38 @@ class TestManifest:
         )
 
         workflow.append_step(
-            ManifestWorkflowStepSchema(
+            WorkflowStepDefinition(
                 function_id="slack#/functions/open_form",
-                id="0",
-                inputs={
-                    "title": "Send message to channel",
-                    "submit_label": "Send message",
-                    "description": "Send a message to a channel",
-                    "interactivity": "{{inputs.interactivity}}",
-                    "fields": {
-                        "elements": [
-                            {"name": "message", "title": "Message", "type": "string", "long": True},
-                            {
-                                "name": "channel",
-                                "title": "Channel to send message to",
-                                "type": "slack#/types/channel_id",
-                                "default": "{{inputs.channel}}",
-                            },
-                        ],
-                        "required": ["channel", "message"],
-                    },
+            ),
+            inputs={
+                "title": "Send message to channel",
+                "submit_label": "Send message",
+                "description": "Send a message to a channel",
+                "interactivity": "{{inputs.interactivity}}",
+                "fields": {
+                    "elements": [
+                        {"name": "message", "title": "Message", "type": "string", "long": True},
+                        {
+                            "name": "channel",
+                            "title": "Channel to send message to",
+                            "type": "slack#/types/channel_id",
+                            "default": "{{inputs.channel}}",
+                        },
+                    ],
+                    "required": ["channel", "message"],
                 },
-            )
+            },
         )
 
         workflow.append_step(func, inputs={"message": "{{steps.0.fields.message}}"})
 
         workflow.append_step(
-            ManifestWorkflowStepSchema(
+            WorkflowStepDefinition(
                 function_id="slack#/functions/send_message",
-                id="0",
-                inputs={"channel_id": "{{steps.0.fields.channel}}", "message": "{{steps.1.updatedMsg}}"},
-            )
+            ),
+            inputs={"channel_id": "{{steps.0.fields.channel}}", "message": "{{steps.1.updatedMsg}}"},
         )
-        
+
         manifest = Manifest(
             display_information=ManifestDisplayInformationSchema(name="Bolt Template App"),
             metadata=ManifestMetadataSchema(major_version=2, minor_version=2),

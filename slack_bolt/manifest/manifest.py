@@ -44,6 +44,19 @@ class FunctionDefinition:
         )
 
 
+class WorkflowStepDefinition:
+    function_id: str
+    type: Optional[StepType] = None
+
+    def __init__(
+        self,
+        function_id: str,
+        type: Optional[StepType] = None,
+    ) -> None:
+        self.function_id = function_id
+        self.type = type
+
+
 class WorkflowDefinition:
 
     _steps: List[ManifestWorkflowStepSchema] = []
@@ -69,9 +82,11 @@ class WorkflowDefinition:
         )
         self._functions.append(function)
 
-    def append_step(self, function: Union[ManifestWorkflowStepSchema, FunctionDefinition], inputs: Optional[Dict] = {}):
-        if isinstance(function, ManifestWorkflowStepSchema):
-            self._steps.append(function)
+    def append_step(self, function: Union[WorkflowStepDefinition, FunctionDefinition], inputs: Optional[Dict]):
+        if isinstance(function, WorkflowStepDefinition):
+            self._steps.append(
+                ManifestWorkflowStepSchema(function_id=function.function_id, id=None, inputs=inputs, type=function.type)
+            )
         elif isinstance(function, FunctionDefinition):
             self._append_function_definition_step(function, inputs)
 
