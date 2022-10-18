@@ -6,8 +6,8 @@ class Schema:
         return self.__getattribute__(key)
 
 
-from typing import Optional, List, Dict, Any, Union
 from enum import Enum
+from typing import Any, Dict, List, Optional, Union
 
 
 class ManifestAppDirectorySchema(Schema):

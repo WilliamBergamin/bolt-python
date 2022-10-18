@@ -1,22 +1,21 @@
-from readline import insert_text
-from typing import Optional, List, Dict, Union
 from enum import Enum
+from typing import Dict, List, Optional, Union
 
 from .models.manifest_schema import (
-    ManifestMetadataSchema,
     ManifestAppDirectorySchema,
     ManifestDatastoreSchema,
     ManifestDisplayInformationSchema,
     ManifestFeaturesSchema,
-    ManifestOauthConfigSchema,
-    ManifestSettingsSchema,
-    ManifestParameters,
-    ManifestWorkflowStepSchema,
     ManifestFunctionSchema,
-    ManifestWorkflowSchema,
+    ManifestMetadataSchema,
+    ManifestOauthConfigSchema,
+    ManifestParameters,
     ManifestSchema,
-    StepType,
+    ManifestSettingsSchema,
+    ManifestWorkflowSchema,
+    ManifestWorkflowStepSchema,
     Schema,
+    StepType,
 )
 
 
