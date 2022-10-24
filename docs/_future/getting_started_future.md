@@ -1,21 +1,27 @@
 ---
 title: Getting started
 order: 0
-slug: getting-started
+slug: getting-started-future
 lang: en
 layout: tutorial
-permalink: /future/getting-started
+permalink: /tutorial/getting-started-future
+mermaid: true
 ---
 
-# Getting started <span class="label-beta">BETA</span>
+## Getting started <span class="label-beta">BETA</span>
 
 <div class="section-content">
 This guide will walk you through introducing you to the [next-generation platform](/bolt-python/future/getting-started#next-gen). It will also cover how to get started with your next-gen platform experience with Bolt for JavaScript by setting up the Slack CLI and also installing the required dependencies.
 </div>
 
+<div class="mermaid">
+graph LR;
+  A-->B;
+</div>
+
 ---
 
-## What is the next-generation platform? {#next-gen}
+### What is the next-generation platform? {#next-gen}
 
 <p class="alert alert_info"><ts-icon class="ts_icon_info_circle"></ts-icon>Our next-generation platform is currently in beta. [Your feedback is most welcome](/bolt-python/future/feedback) - all feedback will help shape the future platform experience!</p>
 
@@ -24,7 +30,7 @@ The next-generation platform is an exciting new way to develop apps for Slack! I
 1. **Flexible functionality**: You can now create modular, shareable, and remixable building blocks within your apps that make it easier than ever to connect and reuse functionality. The primary components of this new functionality are [built-in](/bolt-python/future/built-in-functions) and [custom functions](/bolt-python/future/custom-functions), [workflows](/bolt-python/future/workflows), and [triggers](/bolt-python/future/triggers).
 2. **Quick setup**: With our next-generation developer tools, you can quickly build secure, scalable apps. One of the tools is the [Slack CLI](https://api.slack.com/future/tools/cli), which allows faster development by allowing you to create and scaffold apps all from the command line. Another tool are [app manifests](/bolt-python/future/app-manifests), which are configuration files for your apps that can be shared and reused to quickly set up applications.
 
-### Limitations
+#### Limitations
 
 Today, Bolt for JavaScript supports app development using next-gen platform features like Functions and Workflows and tools such as the Slack CLI alongside all current generally available Slack Platform features.
 
@@ -34,7 +40,7 @@ If you'd like to deploy your app with Slack infrastructure, consider building yo
 
 ---
 
-## Setting up the CLI {#setting-up-cli}
+### Setting up the CLI {#setting-up-cli}
 
 To build a next-generation app with Bolt for JavaScript, you'll first need to get the Slack CLI set up on your machine. You can follow the [Quickstart Guide](https://api.slack.com/future/quickstart) to get instructions on how to manually or automatically install it based on your operating system.
 
@@ -44,13 +50,13 @@ Since we won't be using Deno to build or migrate our next-generation app, you ca
 
 ---
 
-## Install dependencies {#install-dependencies}
+### Install dependencies {#install-dependencies}
 
 Once the CLI is set up, make sure your machine has the most recent version of [Node](https://nodejs.org/en/) installed. Depending on what operating system your machine uses, you can either install Node through a package manager (such as [Homebrew](https://brew.sh/) for Mac) or directly from the website.
 
 ---
 
-## Accept the Beta Terms of Service {#accept-tos}
+### Accept the Beta Terms of Service {#accept-tos}
 
 In order to use the next-generation platform features, you'll need to accept a Terms of Service for Slack Platform Beta. To do so, go to the Workspace Settings of the workspace you'll be developing with, then go to the Permissions tab. Find the "Slack Platform Beta" heading, then select the checkbox that says "I have read and agree to the Slack Platform Beta Service Terms" and save the section. Once you have accepted, the section will look like this:
 
@@ -62,7 +68,7 @@ Congratulations! You're now ready to start building using the [next-generation P
 
 ---
 
-## Create a new app {#create-app}
+### Create a new app {#create-app}
 
 Before you start developing with Bolt, you'll want to create a Slack app.
 
@@ -96,7 +102,7 @@ Your app has now been created in the `my-app` directory! This application can be
 
 ---
 
-## Set up your trigger {#setup-trigger}
+### Set up your trigger {#setup-trigger}
 
 As mentioned, this app comes with preexisting functionality - it uses Functions, Workflows and a Trigger set up to kick things off. Let's run a command to initialize that Trigger via the CLI.
 
@@ -122,7 +128,7 @@ The provided URL will be what you use to run your Trigger. Copy this URL and sav
 
 ---
 
-## Run your app {#run-your-app}
+### Run your app {#run-your-app}
 
 Now that your app and Trigger are successfully created, let's try running it!
 
@@ -134,7 +140,7 @@ You'll be prompted to select a workspace to install the app to&mdash;select the 
 
 Once the app is successfully run, you'll see output in your Terminal to indicate it's running, similar to what you would see with any other Bolt for JavaScript app. You can search for the `⚡️ Bolt app is running! ⚡️` message to make sure that your app has successfully started up.
 
-## Trigger your app's workflow {#trigger-workflow}
+### Trigger your app's workflow {#trigger-workflow}
 
 With your app running, access your workspace and paste the URL from the Trigger you created in the previous step into a message in a public channel.
 
@@ -151,6 +157,6 @@ The full app flow can be seen here:
 
 ---
 
-## Next steps {#next-steps}
+### Next steps {#next-steps}
 
 Now we have a working instance of a next-generation app in your workspace and you've seen it in action! You can explore on your own and dive into the code yourself here or continue your learning journey by diving into [App Manifests](/bolt-python/future/app-manifests) or looking into adding more [Functions](/bolt-python/future/built-in-functions), [Workflows](/bolt-python/future/workflows), and [Triggers]() to your app!

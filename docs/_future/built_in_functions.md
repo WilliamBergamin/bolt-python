@@ -1,53 +1,52 @@
 ---
 title: Built-in functions
-order: 2
+order: 3
 slug: built-in-functions
 lang: en
-layout: tutorial
-permalink: /future/built-in-functions
 ---
-# Built-in functions <span class="label-beta">BETA</span>
 
 <div class="section-content">
-Slack provides built-in functions you can use alongside your [custom functions](/bolt-python/future/custom-functions) in a Workflow. Built-in functions are essentially Slack-native actions, like creating a channel or sending a message, that work hand-in-hand with your functions.
 
-<p class="alert alert_info"><ts-icon class="ts_icon_info_circle"></ts-icon> Please note that some built-in functions may be restricted due to Workspace permission settings. Reach out to a Workspace owner if these aren't available to you.</p>
+Slack provides built-in functions you can use alongside your custom functions in a Workflow. Built-in functions are essentially Slack-native actions, like creating a channel or sending a message, that work hand-in-hand with your functions.
 
 </div>
 
----
+<div>
+<span class="annotation">Refer to <a href="https://slack.dev/bolt-python/api-docs/slack_bolt/kwargs_injection/args.html" target="_blank">the module document</a> to learn the available listener arguments.</span>
+```python
+# When a user joins the workspace, send a message in a predefined channel asking them to introduce themselves
+@app.event("team_join")
+def ask_for_introduction(event, say):
+    welcome_channel_id = "C12345"
+    user_id = event["user"]
+    text = f"Welcome to the team, <@{user_id}>! 🎉 You can introduce yourself in this channel."
+    say(text=text, channel=welcome_channel_id)
+```
+</div>
 
-## Using with Workflows {#workflows}
+<details class="secondary-wrapper" >
+  
+<summary class="section-head" markdown="0">
+  <h4 class="section-head">Filtering on message subtypes</h4>
+</summary>
 
-Built-in functions need to be imported from the standard library built into the SDK — all built-in functions are children of the `Schema.slack.functions` object. Just like custom Functions, built-ins are then added to steps in a Workflow using the `addStep` method. That's it!
+<div class="secondary-content" markdown="0">
+The `message()` listener is equivalent to `event("message")`.
 
-Built-in functions define their own inputs and outputs, as detailed for each built-in below.
+You can filter on subtypes of events by passing in the additional key `subtype`. Common message subtypes like `bot_message` and `message_replied` can be found [on the message event page](https://api.slack.com/events/message#message_subtypes).
+You can explicitly filter for events without a subtype by explicitly setting `None`.
 
-Here's an example of a Workflow that sends a message using the `SendMessage` built-in function:
+</div>
 
-```javascript
-const { DefineWorkflow, Schema } = require('@slack/bolt');
-
-...
-
-SampleWorkflow.addStep(Schema.slack.functions.SendMessage, {
-  channel_id: inputForm.outputs.fields.channel,
-  message: greetingFunctionStep.outputs.greeting,
-});
-
-module.exports = { SampleWorkflow };
+```python
+# Matches all modified messages
+@app.event({
+    "type": "message",
+    "subtype": "message_changed"
+})
+def log_message_change(logger, event):
+    user, text = event["user"], event["text"]
+    logger.info(f"The user {user} changed the message to {text}")
 ```
 
-Read the full documentation for [Workflows](/bolt-python/future/workflows) to learn how to build out Workflows.
-
----
-
-## Built-in functions list {#list}
-
-You can view a full list of built-in functions [here](https://api.slack.com/future/functions#built-in-functions__built-in-functions).
-
----
-
-## Next steps {#next-steps}
-
-Now that you've taken a dive into built-in functions, you can explore [custom functions](/bolt-python/future/custom-functions) and what they have to offer. ✨
+</details>

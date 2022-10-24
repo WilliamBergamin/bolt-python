@@ -1,25 +1,18 @@
 ---
 title: App manifest
-order: 1
-slug: app-manifests
 lang: en
-layout: tutorial
-permalink: /future/app-manifests
+slug: app-manifests
+order: 1
 ---
-# App manifests <span class="label-beta">BETA</span>
+
 
 <div class="section-content">
+
 An app's manifest is where you can configure its name and scopes, declare the functions your app will use, and more.
+
 </div>
 
----
-
-## Configuring an app {#configuring-an-app}
-
-Locate the file named `manifest.json` within your application. This will likely be in your project's root directory or a `manifest` folder.
-
-Inside the manifest file, you will find an `module.exports = Manifest({})` block that defines the app's configuration. For the [Hello World application](https://github.com/slack-samples/bolt-python-starter-template/tree/future) in the Bolt for JavaScript Starter Template, it will look something like this:
-
+<div>
 ```json
 {
   "_metadata": {
@@ -62,9 +55,4 @@ Inside the manifest file, you will find an `module.exports = Manifest({})` block
   "outgoing_domains": []
 }
 ```
-
----
-
-## Next steps {#next-steps}
-
-Now that you're acquainted with the Manifest, you can dive into the world of [built-in functions](/bolt-python/future/built-in-functions) and [custom functions](/bolt-python/future/custom-functions)!
+</div>

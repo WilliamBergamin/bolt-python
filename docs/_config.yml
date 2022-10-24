@@ -20,7 +20,6 @@ collections:
     permalink: /tutorials/:slug
   future:
     output: true
-    permalink: /future/:slug
 
 defaults:
   -

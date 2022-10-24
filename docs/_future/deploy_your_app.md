@@ -1,13 +1,10 @@
 ---
-title: Deploy your app
-order: 8
-slug: deploy-your-app
-lang: en
-layout: tutorial
-permalink: /future/deploy-your-app
----
 
-# Deploy your app <span class="label-beta">BETA</span>
+title: Deploy your app
+lang: en
+slug: deploy-your-app
+order: 5
+---
 
 <div class="section-content">
 Instructions for deploying your next-generation Bolt application to third-party infrastructure are coming soon! Stay tuned.

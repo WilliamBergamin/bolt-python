@@ -1,12 +1,9 @@
 ---
 title: Custom functions
-order: 3
+order: 4
 slug: custom-functions
 lang: en
-layout: tutorial
-permalink: /future/custom-functions
 ---
-# Custom functions <span class="label-beta">BETA</span>
 
 <div class="section-content">
 On the next-generation platform, you can build **custom functions**, reusable building blocks of automation that are deployed to our infrastructure and accept inputs, perform some calculations, and provide outputs. Functions can be used as steps in [Workflows](/bolt-python/future/workflows)&mdash;and Workflows are invoked by [Triggers](/bolt-python/future/triggers).

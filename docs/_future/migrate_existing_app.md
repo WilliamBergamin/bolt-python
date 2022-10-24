@@ -1,13 +1,13 @@
 ---
 title: Migrate an existing app
-order: 9
+order: 6
 slug: migrate-existing-app
 lang: en
 layout: tutorial
-permalink: /future/migrate-existing-app
+permalink: /tutorial/migrate-existing-app
 ---
 
-# Migrate an existing app <span class="label-beta">BETA</span>
+## Migrate an existing app <span class="label-beta">BETA</span>
 
 <div class="section-content">
 If you have an existing Slack app written with Bolt for JavaScript that you'd like to migrate to the [next-generation platform](/bolt-python/future/getting-started#next-gen), this guide is for you!
@@ -17,13 +17,13 @@ If you do not have an existing Bolt for JavaScript application but are looking t
 
 ---
 
-## Prerequisites {#prerequisites}
+### Prerequisites {#prerequisites}
 
 Before we get started, make sure you've followed the steps up to the "Accept the Beta Terms of Service" section to install required dependencies in the [Getting Started guide](/bolt-python/future/getting-started).
 
 ---
 
-## Set up your app to work with the Slack CLI {#setup-with-cli}
+### Set up your app to work with the Slack CLI {#setup-with-cli}
 
 Clone your app to your local file system.
 
@@ -39,7 +39,7 @@ Add a `slack.json` file to your local project root containing [this](https://git
 
 ---
 
-## Add your manifest {#manifest-in-code}
+### Add your manifest {#manifest-in-code}
 
 Head to [your app's App Config Page](https://api.slack.com/apps) and navigate to Features > App Manifest. Download a copy of your app manifest in the JSON file format.
 
@@ -86,7 +86,7 @@ Run `slack manifest validate` to validate your App's configuration with Slack AP
 
 ---
 
-## Run your app! {#tada}
+### Run your app! {#tada}
 
 Run the Slack CLI command `slack run` to start your app in local development.
 
@@ -96,7 +96,7 @@ Now you're ready to start adding [Functions](/bolt-python/future/built-in-functi
 
 ---
 
-## Updating your app configuration {#update-app}
+### Updating your app configuration {#update-app}
 
 You have probably made changes to your app’s manifest (adding a Function or a Workflow, for example). To sync your production app’s configuration with the changes you’ve made in development:
 
@@ -120,6 +120,6 @@ You have probably made changes to your app’s manifest (adding a Function or a 
 
 ---
 
-## Conclusion {#conclusion}
+### Conclusion {#conclusion}
 
 Congratulations on migrating your app to the your next-generation Slack Platform! 🎉 You can continue your journey by learning about [App Manifests](/bolt-python/future/app-manifests) or looking into adding [Functions](/bolt-python/future/built-in-functions) and [Workflows](/bolt-python/future/workflows) to your app!
