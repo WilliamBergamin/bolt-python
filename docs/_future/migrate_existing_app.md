@@ -1,6 +1,6 @@
 ---
 title: Migrate an existing app
-order: 6
+order: 7
 slug: migrate-existing-app
 lang: en
 layout: tutorial

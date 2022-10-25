@@ -1,17 +1,17 @@
 ---
-title: Listening to function
+title: Listening & responding to functions
 lang: en
-slug: function-listening
-order: 2
+slug: functions
+order: 5
+layout: future
 ---
 
 <div class="section-content">
 
 Your app can use the `function()` method to listen to incoming function requests. The method requires a function `callback_id` of type `str`. Functions must eventually be completed with `complete()` to inform Slack that your app has processed the function request.There are two ways to complete a function. `complete()` requires **one of two** keyword arguments `outputs` or `error`.
 
-The first `outputs` of type `dict` completes your function successfully and provide a dictionary containing the outputs of your function as defined in the apps manifest.
-
-The second is `error` of type `str` completes your function unsuccessfully and provides a message containing information regarding why your function was not successful.
+* `outputs` of type `dict` completes your function **successfully** and provide a dictionary containing the outputs of your function as defined in the apps manifest.
+* `error` of type `str` completes your function **unsuccessfully** and provides a message containing information regarding why your function was not successful.
 
 </div>
 
@@ -35,9 +35,9 @@ def sample_func(event, complete: Complete):
 <h4 class="secondary-header">Function Interactivity</h4>
 </summary>
 
-<div class="secondary-content" markdown="0">
+<div class="secondary-content">
 
-`Function()` returns a `SlackFunction` object. It is used by your App to listen to interactive behaviors such as [actions](bolt-python/concepts#action-respond) and [views](http://localhost:4000/bolt-python/concepts#view_submissions) that functions can create.
+`Function()` returns a `SlackFunction` object. It is used by your App to listen to interactive behaviors such as [actions](/bolt-python/concepts#action-respond) and [views](/bolt-python/concepts#view_submissions) that functions can create.
 
 These listeners behave similarly to the ones assigned directly to your App. the notable difference is that `complete()` must be call once your function is completed.
 

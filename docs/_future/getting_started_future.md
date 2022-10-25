@@ -1,11 +1,10 @@
 ---
 title: Getting started
-order: 0
+order: 1
 slug: getting-started-future
 lang: en
 layout: tutorial
 permalink: /tutorial/getting-started-future
-mermaid: true
 ---
 
 ## Getting started <span class="label-beta">BETA</span>

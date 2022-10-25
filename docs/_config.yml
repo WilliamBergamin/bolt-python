@@ -20,6 +20,7 @@ collections:
     permalink: /tutorials/:slug
   future:
     output: true
+    permalink: /future/:slug
 
 defaults:
   -
@@ -37,12 +38,14 @@ t:
     advanced: Advanced concepts
     start: Getting started
     contribute: Contributing
+    beta: BETA
   ja-jp:
     basic: 基本的な概念
     steps: ワークフローステップ
     advanced: 応用コンセプト
     start: Bolt 入門ガイド
     contribute: 貢献
+    beta: BETA
 
 # Metadata
 repo_name: bolt-python

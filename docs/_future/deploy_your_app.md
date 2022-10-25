@@ -3,7 +3,8 @@
 title: Deploy your app
 lang: en
 slug: deploy-your-app
-order: 5
+order: 6
+layout: future
 ---
 
 <div class="section-content">
