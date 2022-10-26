@@ -11,15 +11,15 @@ Your App can [listen to custom functions](/bolt-python/concepts#functions). Your
 
 `manifest.json` is where you define your functions. `functions` is a `dictionary` with `key`:`value` pair:
 
-- `key`, `string` containing the function `callback_id`
-- `value`, [function object](#function)
+- `key`; `string` containing the function `callback_id`
+- `value`; [function object](#function)
   
 ##### function
 
-- `title`, `string` containing the title
-- `description`, `string` containing the description
-- `input_parameters`, [parameters object](#parameters) defining the inputs
-- `output_parameters`, [parameters object](#parameters) defining the outputs
+- `title`; `string` containing the title
+- `description`; `string` containing the description
+- `input_parameters`; [parameters object](#parameters) defining the inputs
+- `output_parameters`; [parameters object](#parameters) defining the outputs
 
 </div>
 

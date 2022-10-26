@@ -79,8 +79,8 @@ Notably This file informs slack of the definitions for:
 
 ##### parameters
 
-* `properties`, [properties definition](#properties)
-* `required`, `list` of `string` defining the property names required by the function
+* `properties`; [properties object](#properties)
+* `required`; `list` of `string` defining the property names required by the function
 
 </div>
 
@@ -109,8 +109,8 @@ Notably This file informs slack of the definitions for:
 
 `dictionary` with `key`:`value` pair
 
-* `key`, `string` defining the property name
-* `value`, [property definition](#property)
+* `key`; `string` defining the property name
+* `value`; [property object](#property)
 
 </div>
 
@@ -137,8 +137,8 @@ Notably This file informs slack of the definitions for:
 
 ##### property
 
-* `type`, `string` defining the property type
-* `description`, `string` defining the property description
+* `type`; `string` defining the property type
+* `description`; `string` defining the property description
 
 </div>
 

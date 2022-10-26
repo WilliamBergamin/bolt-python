@@ -16,21 +16,21 @@ trigger → workflow → step → function
 
 `manifest.json` is where you define your workflows. `workflows` is a dictionary with `key:value` pair
 
-- `key`, `string` defining the `workflow_id`
-- `value`, [workflow object](#workflow)
+- `key`; `string` defining the `workflow_id`
+- `value`; [workflow object](#workflow)
   
 ##### workflow
 
-- `title`, `string` defining the title
-- `description`, `string` defining the description
-- `input_parameters`, [parameters object](#parameters) defining the inputs
-- `steps`, `list` of [step objects](#step) defining the steps
+- `title`; `string` defining the title
+- `description`; `string` defining the description
+- `input_parameters`; [parameters object](#parameters) defining the inputs
+- `steps`; `list` of [step objects](#step) defining the steps
 
 ##### step
 
-- `id`, `string` defining the order of the steps
-- `function_id`, `string` defining the `function_id` of the function to evoke
-- `inputs`, `dict[string:string]` of the inputs to provide to the function
+- `id`; `string` defining the order of the steps
+- `function_id`; `string` defining the `function_id` of the function to evoke
+- `inputs`; `dict[string:string]` of the inputs to provide to the function
 
 </div>
 
