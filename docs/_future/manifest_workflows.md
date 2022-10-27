@@ -8,7 +8,7 @@ layout: future
 
 <div class="section-content">
 
-Your app can use functions by referencing them in a Workflow. Your functions and the ones provided by slack can be used as a step in Workflows.
+Your app can use functions by referencing them in workflows. Your functions and the ones provided by slack can be used as a step in workflow definitions.
 
 Workflows are invoked by [Triggers](/bolt-python/future/triggers). You will need to set up a trigger to use your workflow.
 
