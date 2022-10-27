@@ -21,11 +21,10 @@ Notably This file informs slack of the definitions for:
 <pre class="structure">
 .
 ├── ...
-├── manifest                      # folder with app manifest and triggers
-│   ├── manifest.json             # app manifest definition
-│   └── triggers                  # folder with trigger files
-│       ├── sample_trigger.json   # trigger definition
-│       └── ...
+├── manifest.json             # app manifest definition
+├── triggers                  # folder with trigger files
+│   ├── sample_trigger.json   # trigger definition
+│   └── ...
 └── ...
 </pre>
 
