@@ -14,23 +14,124 @@ Workflows are invoked by [Triggers](/bolt-python/future/triggers). You will need
 
 trigger → workflow → step → function
 
-`manifest.json` is where you define your workflows. `workflows` is a dictionary with `key:value` pair
+`manifest.json` is where you define your workflows.
 
-- `key`; `string` defining the `workflow_id`
-- `value`; [workflow object](#workflow)
-  
-##### workflow
+<table id="workflows">
+  <tr>
+    <th>
+      <h5>workflows</h5>
+    </th>
+    <th>
+      <code>dictionary</code>
+    </th>
+    <th></th>
+  </tr>
+  <tr>
+    <td>
+      <code>key</code>
+    </td>
+    <td>
+      <code>string</code>
+    </td>
+    <td>defines the function <code>callback_id</code></td>
+  </tr>
+  <tr>
+    <td>
+      <code>value</code>
+    </td>
+    <td>
+      <a href="#workflow">workflow object</a>
+    </td>
+    <td>defines the function</td>
+  </tr>
+</table>
 
-- `title`; `string` defining the title
-- `description`; `string` defining the description
-- `input_parameters`; [parameters object](#parameters) defining the inputs
-- `steps`; `list` of [step objects](#step) defining the steps
+<table id="workflow">
+  <tr>
+    <th>
+      <h5>workflow</h5>
+    </th>
+    <th>
+      <code>object</code>
+    </th>
+    <th></th>
+  </tr>
+  <tr>
+    <td>
+      <code>title</code>
+    </td>
+    <td>
+      <code>string</code>
+    </td>
+    <td>defines the title</td>
+  </tr>
+  <tr>
+    <td>
+      <code>description</code>
+    </td>
+    <td>
+      <code>string</code>
+    </td>
+    <td>defines the description</td>
+  </tr>
+  <tr>
+    <td>
+      <code>input_parameters</code>
+    </td>
+    <td>
+      <a href="#parameters">parameters object</a>
+    </td>
+    <td>defines the inputs</td>
+  </tr>
+  <tr>
+    <td>
+      <code>steps</code>
+    </td>
+    <td>
+      <code>list[<a href="#parameters">parameters object</a>]</code>
+    </td>
+    <td>defines the steps</td>
+  </tr>
+</table>
 
-##### step
-
-- `id`; `string` defining the order of the steps
-- `function_id`; `string` defining the `function_id` of the function to evoke
-- `inputs`; `dict[string:string]` of the inputs to provide to the function
+<table id="step">
+  <tr>
+    <th>
+      <h5>step</h5>
+    </th>
+    <th>
+      <code>object</code>
+    </th>
+    <th></th>
+  </tr>
+  <tr>
+    <td>
+      <code>id</code>
+    </td>
+    <td>
+      <code>string</code>
+    </td>
+    <td>defines the order of the steps</td>
+  </tr>
+  <tr>
+    <td>
+      <code>function_id</code>
+    </td>
+    <td>
+      <code>string</code>
+    </td>
+    <td>defines the <code>function_id</code> of the function to evoke</td>
+  </tr>
+  <tr>
+    <td>
+      <code>inputs</code>
+    </td>
+    <td>
+      <code>dict[string:string]</code>
+    </td>
+    <td>defines the inputs to provide to the function</td>
+  </tr>
+</table>
 
 </div>
 

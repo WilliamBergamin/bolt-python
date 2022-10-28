@@ -28,11 +28,23 @@ Notably this file informs slack of the definitions for:
 └── ...
 </pre>
 
+---
+
+Be sure to include the following line in your `manifest.json` file in order to get type prediction & validation in your IDE.
+
+```json
+{
+  "$schema": "https://raw.githubusercontent.com/slackapi/manifest-schema/main/manifest.schema.json",
+  ...
+}
+```
+
 </div>
 
 <div>
 ```json
 {
+  "$schema": "https://raw.githubusercontent.com/slackapi/manifest-schema/main/manifest.schema.json",
   "_metadata": {
     "major_version": 2,
   },
@@ -76,10 +88,35 @@ Notably this file informs slack of the definitions for:
 
 <div class="secondary-content">
 
-##### parameters
-
-* `properties`; [properties object](#properties)
-* `required`; `list` of `string` defining the property names required by the function
+<table id="parameters">
+  <tr>
+    <th>
+      <h5>parameters</h5>
+    </th>
+    <th>
+      <code>object</code>
+    </th>
+    <th></th>
+  </tr>
+  <tr>
+    <td>
+      <code>properties</code>
+    </td>
+    <td>
+      <a href="#properties">properties object</a>
+    </td>
+    <td>defines the properties</td>
+  </tr>
+  <tr>
+    <td>
+      <code>required</code>
+    </td>
+    <td>
+      <code>list[string]</code>
+    </td>
+    <td>defines the properties required by the function</td>
+  </tr>
+</table>
 
 </div>
 
@@ -104,12 +141,35 @@ Notably this file informs slack of the definitions for:
 
 <div class="secondary-content">
 
-##### properties
-
-`dictionary` with `key`:`value` pair
-
-* `key`; `string` defining the property name
-* `value`; [property object](#property)
+<table id="properties">
+  <tr>
+    <th>
+      <h5>properties</h5>
+    </th>
+    <th>
+      <code>dictionary</code>
+    </th>
+    <th></th>
+  </tr>
+  <tr>
+    <td>
+      <code>key</code>
+    </td>
+    <td>
+      <code>string</code>
+    </td>
+    <td>defines the property name</td>
+  </tr>
+  <tr>
+    <td>
+      <code>value</code>
+    </td>
+    <td>
+      <a href="#property">property object</a>
+    </td>
+    <td>defines the property</td>
+  </tr>
+</table>
 
 </div>
 
@@ -134,10 +194,35 @@ Notably this file informs slack of the definitions for:
 
 <div class="secondary-content">
 
-##### property
-
-* `type`; `string` defining the property type
-* `description`; `string` defining the property description
+<table id="property">
+  <tr>
+    <th>
+      <h5>property</h5>
+    </th>
+    <th>
+      <code>object</code>
+    </th>
+    <th></th>
+  </tr>
+  <tr>
+    <td>
+      <code>type</code>
+    </td>
+    <td>
+      <code>string</code>
+    </td>
+    <td>defines the property type</td>
+  </tr>
+  <tr>
+    <td>
+      <code>description</code>
+    </td>
+    <td>
+      <code>string</code>
+    </td>
+    <td>defines the property description</td>
+  </tr>
+</table>
 
 </div>
 
