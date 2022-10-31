@@ -117,6 +117,17 @@ span.beta {
   font-weight: 600;
 }
 
+.panel .sidebar-content ul.sidebar-section .label-legacy {
+  line-height: 1em;
+  vertical-align: middle;
+  color: var(--white);
+  background-color: var(--dark-grey);
+  font-size: 0.5em;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
 .panel .sidebar-content ul.sidebar-section .label-beta {
   line-height: 1em;
   vertical-align: middle;
@@ -331,6 +342,18 @@ pre tbody td.gl pre {
   height: 1px;
   border-top: 1px solid #DDD;
   width: 100%;
+}
+
+.content .section-wrapper .label-legacy {
+  line-height: 1em;
+  vertical-align: middle;
+  color: var(--white);
+  background-color: var(--dark-grey);
+  font-size: 0.5em;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 12px;
+  margin-left: 10px;
 }
 
 a:hover {

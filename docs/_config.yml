@@ -23,8 +23,7 @@ collections:
     permalink: /future/:slug
 
 defaults:
-  -
-    scope:
+  - scope:
       path: ""
     values:
       layout: "default"
@@ -39,6 +38,7 @@ t:
     start: Getting started
     contribute: Contributing
     beta: BETA
+    legacy: LEGACY
   ja-jp:
     basic: 基本的な概念
     steps: ワークフローステップ
@@ -46,6 +46,7 @@ t:
     start: Bolt 入門ガイド
     contribute: 貢献
     beta: BETA
+    legacy: LEGACY
 
 # Metadata
 repo_name: bolt-python

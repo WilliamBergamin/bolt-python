@@ -42,18 +42,7 @@ sidebar_style: main
       </div>
     </div>
   </div>
-  <script>
-    function openCommonManifestTypes() {
-      var hash = location.hash.substring(1);
-      const details = document.getElementsByTagName("details");
-      for (let i = 0; i < details.length; i++) {
-        if (hash) var header = details[i].querySelector(`#${hash}`);
-        if (header) details[i].open = true;
-      }
-    }
-    window.addEventListener('hashchange', openCommonManifestTypes);
-    openCommonManifestTypes();
-  </script>
+  <script src="{{ site.url | append: site.baseurl }}/scripts/future_search_hash.js"></script>
   {% include analytics.html %}
 </body>
 

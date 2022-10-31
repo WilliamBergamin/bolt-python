@@ -8,7 +8,7 @@ layout: future
 
 <div class="section-content">
 
-Your app can use the `function()` method to listen to incoming function requests. The method requires a function `callback_id` of type `str`. Functions must eventually be completed with `complete()` to inform Slack that your app has processed the function request.There are two ways to complete a function. `complete()` requires **one of two** keyword arguments `outputs` or `error`.
+Your app can use the `function()` method to listen to incoming function requests. The method requires a function `callback_id` of type `str`. Functions must eventually be completed with `complete()` to inform Slack that your app has processed the function request. There are two ways to complete a function with `complete()` which requires **one of two** keyword arguments `outputs` or `error`.
 
 * `outputs` of type `dict` completes your function **successfully** and provide a dictionary containing the outputs of your function as defined in the apps manifest.
 * `error` of type `str` completes your function **unsuccessfully** and provides a message containing information regarding why your function was not successful.
@@ -37,9 +37,9 @@ def sample_func(event, complete: Complete):
 
 <div class="secondary-content">
 
-`Function()` returns a `SlackFunction` object. It is used by your app to set up listeners on interactive behaviors such as [actions](/bolt-python/concepts#action-respond) and [views](/bolt-python/concepts#view_submissions).
+The `function()` method returns a `SlackFunction` decorator object. This object can be used by your app to set up listeners for interactive behaviors such as [actions](/bolt-python/concepts#action-respond) and [views](/bolt-python/concepts#view_submissions). These interactive behaviors will be scoped to your function.
 
-These listeners behave similarly to the ones assigned directly to your app. the notable difference is that `complete()` must be call once your function is completed.
+These listeners behave similarly to the ones assigned directly to your app. the notable difference is that `complete()` must be called once your function is completed.
 
 </div>
 

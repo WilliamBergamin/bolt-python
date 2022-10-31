@@ -7,9 +7,9 @@ layout: future
 ---
 
 <div class="section-content">
-Your app can [listen to custom functions](/bolt-python/concepts#functions). Your functions must be defined in your [app manifest](/bolt-python/concepts#manifest) in order for Slack to know of their existence.
+Your app can [listen to functions](/bolt-python/future/concepts#functions) defined and created by you. In order for this to work Slack must know of their existence. To do this you must define them in your [app manifest](/bolt-python/concepts#manifest).
 
-`manifest.json` is where you define your functions.
+`manifest.json` is where you define your functions for Slack.
 
 <table id="functions_dict">
   <tr>
@@ -28,7 +28,7 @@ Your app can [listen to custom functions](/bolt-python/concepts#functions). Your
     <td>
       <code>string</code>
     </td>
-    <td>defines the function <code>callback_id</code></td>
+    <td>defines the function's <code>callback_id</code></td>
   </tr>
   <tr>
     <td>

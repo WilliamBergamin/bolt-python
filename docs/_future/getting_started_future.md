@@ -10,7 +10,7 @@ permalink: /tutorial/getting-started-future
 ## Getting started <span class="label-beta">BETA</span>
 
 <div class="section-content">
-This guide will introduce you to the [next-generation platform](/bolt-python/future/getting-started#next-gen). It will also cover how to get started with your next-gen platform experience with Bolt for Python by setting up the Slack CLI and also installing the required dependencies.
+This guide will cover how to get started with your next-gen platform using Bolt for Python by setting up the Slack CLI and also installing the required dependencies.
 </div>
 
 ---
@@ -33,7 +33,7 @@ To build a next-generation app with Bolt for Python, you'll need to get the Slac
 
 ### Install dependencies {#install-dependencies}
 
-Once the CLI is set up, make sure your machine has the most recent version of [Python](https://www.python.org/) installed. you can either install Node through a package manager (such as [Homebrew](https://brew.sh/) for Mac) or directly from the website.
+Once the CLI is set up, make sure your machine has the most recent version of [Python](https://www.python.org/) installed. you can either install Python through a package manager (such as [Homebrew](https://brew.sh/) for Mac) or directly from the website.
 
 ---
 
@@ -45,7 +45,7 @@ In order to use the next-generation platform features, you'll need to accept a T
 
 > 💡 You must be an admin of your workspace to be able to access the Workspace Settings and accept the Terms of Service.
 
-Congratulations! You're now ready to start building using the [next-generation Platform](/bolt-python/future/getting-started#next-gen). 🎉 You can now proceed with either creating a new app by following the instructions below or [migrating an existing app](/bolt-python/future/migrate-existing-app).
+Congratulations! You're now ready to start building using the next-generation Platform. 🎉 You can now proceed with either creating a new app by following the instructions below or <a href="/bolt-python/tutorial/migrate-existing-app" target="_blank">migrating an existing app</a>.
 
 ---
 
@@ -59,7 +59,7 @@ To create the app, you'll run the following command:
 slack create my-app -t slack-samples/bolt-python-starter-template -b future
 ```
 
-This command creates an app through the CLI by cloning a specified template. In this case, the template is the [Bolt for Python Starter Template](https://github.com/slack-samples/bolt-python-starter-template/tree/future) on the `future` branch. This starter template includes a "Hello World" example that demonstrates how to use <a href="/bolt-python/future/concepts#built-in-functions" target="_blank">built-in</a> and <a href="/bolt-python/future/concepts#functions" target="_blank">custom</a> Functions, <a href="https://api.slack.com/future/triggers" target="_blank">Triggers</a> and <a href="/bolt-python/future/concepts#manifest-workflows" target="_blank">Workflows</a>.
+This command creates an app through the CLI by cloning a specified template. In this case, the template is the <a href="https://github.com/slack-samples/bolt-python-starter-template/tree/future" target="_blank">Bolt for Python Starter Template</a> on the `future` branch. This starter template includes a "Hello World" example that demonstrates how to use <a href="/bolt-python/future/concepts#manifest-workflows" target="_blank">built-in</a> and <a href="/bolt-python/future/concepts#functions" target="_blank">custom</a> Functions, <a href="https://api.slack.com/future/triggers" target="_blank">Triggers</a> and <a href="/bolt-python/future/concepts#manifest-workflows" target="_blank">Workflows</a>.
 
 Once the app is successfully created, you should see a message like this:
 
@@ -119,17 +119,19 @@ pip install -r requirements.txt
 slack run
 ```
 
+Executing `pip install -r requirements.txt` installs all the project requirements to your machine.
+
 Executing `slack run` starts a local development server, syncing changes to your workspace's development version of your app.
 
 You'll be prompted to select a workspace to install the app to&mdash;select the development instance of your workspace (you'll know it's the development version because the name has the string `(dev)` appended).
 
 > 💡 If you don't see the workspace you'd like to use in the list, you can `CTRL + C` out of the `slack run` command and run `slack auth login`. This will allow you to authenticate in your desired workspace to have it show up in the list for `slack run`.
 
-Once the app is successfully run, you'll see output in your Terminal to indicate it's running, similar to what you would see with any other Bolt for Python app. You can search for the `⚡️ Bolt app is running! ⚡️` message to make sure that your app has successfully started up.
+Once the app is successfully ran, you'll see output in your Terminal to indicate it's running, similar to what you would see with any other Bolt for Python app. You can search for the `⚡️ Bolt app is running! ⚡️` message to make sure that your app has successfully started up.
 
 ### Trigger your app's workflow {#trigger-workflow}
 
-With your app running, access your workspace and paste the URL from the Trigger you created in the previous step into a message in a public channel.
+With your app running, access your workspace and paste the URL from the Trigger you created in the [previous step](/bolt-python/tutorial/getting-started-future#setup-trigger) into a message in a public channel.
 
 > 💡 App Triggers are automatically saved as a channel bookmark under "Workflows" for easy access.
 

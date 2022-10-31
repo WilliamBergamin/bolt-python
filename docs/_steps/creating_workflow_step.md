@@ -27,6 +27,7 @@ from slack_bolt import App
 from slack_bolt.workflows.step import WorkflowStep
 
 # Initiate the Bolt app as you normally would
+
 app = App(
     token=os.environ.get("SLACK_BOT_TOKEN"),
     signing_secret=os.environ.get("SLACK_SIGNING_SECRET")
@@ -42,13 +43,17 @@ def execute(step, complete, fail):
     pass
 
 # Create a new WorkflowStep instance
+
 ws = WorkflowStep(
     callback_id="add_task",
     edit=edit,
     save=save,
     execute=execute,
 )
+
 # Pass Step to set up listeners
+
 app.step(ws)
+
 ```
 </div>

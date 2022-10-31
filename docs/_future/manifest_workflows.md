@@ -8,9 +8,9 @@ layout: future
 
 <div class="section-content">
 
-Your app can use functions by referencing them in workflows. Your functions and the ones provided by slack can be used as a step in workflow definitions.
+Your app can use functions by referencing them in workflows. Your functions and the ones provided by slack can be used as steps in workflow definitions.
 
-Workflows are invoked by [Triggers](/bolt-python/future/triggers). You will need to set up a trigger to use your workflow.
+Workflows are invoked by <a href="https://api.slack.com/future/triggers" target="_blank">triggers</a>. You will need to set up a trigger in order to use your defined workflows.
 
 trigger → workflow → step → function
 
@@ -33,7 +33,7 @@ trigger → workflow → step → function
     <td>
       <code>string</code>
     </td>
-    <td>defines the function <code>callback_id</code></td>
+    <td>defines the workflows <code>id</code></td>
   </tr>
   <tr>
     <td>
@@ -120,7 +120,7 @@ trigger → workflow → step → function
     <td>
       <code>string</code>
     </td>
-    <td>defines the <code>function_id</code> of the function to evoke</td>
+    <td>identifies the <code>function</code> to evoke</td>
   </tr>
   <tr>
     <td>
@@ -186,7 +186,7 @@ Slack provides built in functions that can be used by a workflow to accomplish s
 - <a href="https://api.slack.com/future/functions#open-a-form" target="_blank">Open a form</a>
 - <a href="https://api.slack.com/future/functions#create-channel" target="_blank">Create channel</a>
 
-Refer to <a href="https://api.slack.com/future/functions" target="_blank">the built-in functions document</a> to learn the available built-in functions.
+Refer to <a href="https://api.slack.com/future/functions" target="_blank">the built-in functions document</a> to learn about the available built-in functions.
 </div>
 
 ```json
