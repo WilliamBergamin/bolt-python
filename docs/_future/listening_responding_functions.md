@@ -23,7 +23,11 @@ Your app can use the `function()` method to listen to incoming function requests
 def sample_func(event, complete: Complete):
     try:
         message = event["inputs"]["message"]
-        complete(outputs={"updatedMsg": f":wave: You submitted the following message: \n\n>{message}"})
+        complete(
+            outputs={
+                "updatedMsg": f":wave: You submitted the following message: \n\n>{message}"
+            }
+        )
     except Exception as e:
         complete(error="Cannot submit the message")
         raise e
@@ -44,6 +48,8 @@ These listeners behave similarly to the ones assigned directly to your app. the 
 </div>
 
 ```python
+# Your listener will be called when your function "sample_function" is triggered from a workflow
+# When triggered a message containing a button with an action_id "approve_button" is posted
 @app.function("sample_function")
 def sample_func(event, complete: Complete):
     try:
@@ -72,6 +78,10 @@ def sample_func(event, complete: Complete):
         complete(error="Cannot post message")
         raise e
 
+# Your listener will be called when a block element
+#   - Created by your "sample_func"
+#   - With the action_id "sample_action"
+# is triggered
 @sample_func.action("sample_action")
 def update_message(ack, body, client, complete):
     try:
