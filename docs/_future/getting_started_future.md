@@ -34,7 +34,7 @@ Bolt for Python supports app development using next-gen platform features like F
 
 To build a next-generation app with Bolt for Python, you'll need to get the Slack CLI.
 
-**Install the Slack Cli** by following this [Quickstart Guide](https://api.slack.com/future/quickstart).
+**Install the Slack Cli** by following this [Quickstart Guide](https://api.slack.com/future/quickstart). Since we won't be using Deno to build our next-generation app, you can skip any instructions related to installing Deno or creating an app using a Deno template. Once you've logged into the CLI using `slack login` and verified your login using `slack auth list`, you can proceed with the instructions in this guide.
 
 ---
 
