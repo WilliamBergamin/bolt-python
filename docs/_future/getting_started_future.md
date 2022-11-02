@@ -34,25 +34,13 @@ Bolt for Python supports app development using next-gen platform features like F
 
 To build a next-generation app with Bolt for Python, you'll need to get the Slack CLI.
 
-**Install the Slack Cli** by following this [Quickstart Guide](https://api.slack.com/future/quickstart). Since we won't be using Deno to build our next-generation app, you can skip any instructions related to installing Deno or creating an app using a Deno template. Once you've logged into the CLI using `slack login` and verified your login using `slack auth list`, you can proceed with the instructions in this guide.
+**Install the Slack Cli** by following this <a href="https://api.slack.com/future/quickstart" target="_blank">Quickstart</a>. Since we won't be using Deno to build our next-generation app, you can skip any instructions related to installing Deno or creating an app using a Deno template. Once you've logged into the CLI using `slack login` and verified your login using `slack auth list`, you can proceed with the instructions in this guide.
 
 ---
 
 ### Install dependencies {#install-dependencies}
 
-Once the CLI is set up, make sure your machine has the most recent version of [Python](https://www.python.org/) installed. you can either install Python through a package manager (such as [Homebrew](https://brew.sh/) for Mac) or directly from the website.
-
----
-
-### Accept the Beta Terms of Service {#accept-tos}
-
-In order to use the next-generation platform features, you'll need to accept a Terms of Service for Slack Platform Beta. To do so, go to the Workspace Settings of the workspace you'll be developing with, then go to the Permissions tab. Find the "Slack Platform Beta" heading, then select the checkbox that says "I have read and agree to the Slack Platform Beta Service Terms" and save the section. Once you have accepted, the section will look like this:
-
-![Beta Terms of Service](https://slack.dev/bolt-js/assets/beta-tos-future.png "Beta Terms of Service")
-
-> 💡 You must be an admin of your workspace to be able to access the Workspace Settings and accept the Terms of Service.
-
-Congratulations! You're now ready to start building using the next-generation Platform. 🎉 You can now proceed with either creating a new app by following the instructions below or <a href="/bolt-python/tutorial/migrate-existing-app" target="_blank">migrating an existing app</a>.
+Once the CLI is set up, make sure your machine has the most recent version of <a href="https://www.python.org/" target="_blank">Python</a> installed.You can install Python through a package manager (such as <a href="https://brew.sh/" target="_blank">Homebrew</a> for Mac) or directly from the <a href="https://www.python.org/downloads/" target="_blank">website</a>.
 
 ---
 
@@ -62,7 +50,7 @@ Before you start developing with Bolt, you'll want to create a Slack app.
 
 To create the app, you'll run the following command:
 
-```zsh
+```bash
 slack create my-app -t slack-samples/bolt-python-starter-template -b future
 ```
 
@@ -70,7 +58,7 @@ This command creates an app through the CLI by cloning a specified template. In 
 
 Once the app is successfully created, you should see a message like this:
 
-```txt
+```text
 ✨ my-app successfully created
 
 🧭 Explore your project's README.md for documentation and code samples, and at any time run slack help to display a list of available commands
