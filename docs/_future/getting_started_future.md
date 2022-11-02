@@ -10,16 +10,23 @@ permalink: /tutorial/getting-started-future
 ## Getting started <span class="label-beta">BETA</span>
 
 <div class="section-content">
-This guide will cover how to get started with your next-gen platform using Bolt for Python by setting up the Slack CLI and also installing the required dependencies.
+This guide will cover how to get started with your next-gen platform using Bolt for Python, by setting up the Slack CLI and installing the required dependencies.
+
+Find out about the next-generation platform on Slack's <a href="https://api.slack.com/future/intro" target="_blank">official introduction page.</a>
 </div>
 
 ---
 
-### What is the next-generation platform? {#next-gen}
+### Limitations
 
-You can find all the answers to this question on Slack's <a href="https://api.slack.com/future/intro" target="_blank">official introduction page.</a>
+Bolt for Python supports app development using next-gen platform features like Functions, Workflows and tools such as the Slack CLI alongside all current generally available Slack Platform features.
 
-<p class="alert alert_info"><ts-icon class="ts_icon_info_circle"></ts-icon>Our next-generation platform is currently in beta. <a href="https://api.slack.com/future/survey" target="_blank">Your feedback is most welcome.</a> - all feedback will help shape the future platform experience!</p>
+#### We do not yet support
+
+- Deployment to secure and managed Slack infrastructure
+- Datastores API <a href="https://api.slack.com/future/datastores" target="_blank">Datastores</a> functionality.
+
+> If you'd like to deploy your app with Slack infrastructure, consider building your next-generation application with the Deno Slack API. You can get started with that <a href="https://api.slack.com/future/get-started" target="_blank">here</a>.
 
 ---
 
