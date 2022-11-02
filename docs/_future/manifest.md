@@ -118,29 +118,6 @@ Be sure to include the following line in your `manifest.json` file in order to g
   </tr>
 </table>
 
-</div>
-
-```json
-  "$comment": "sample parameters object"
-  "*_parameters":{
-    "properties": {
-      "property_0_name": {
-        "type": "string",
-        "description": "this is my first property"
-      }
-    },
-    "required": [
-      "property_name"
-    ]
-  }
-```
-
-</div>
-
-<div>
-
-<div class="secondary-content">
-
 <table id="properties">
   <tr>
     <th>
@@ -170,29 +147,6 @@ Be sure to include the following line in your `manifest.json` file in order to g
     <td>defines the property</td>
   </tr>
 </table>
-
-</div>
-
-```json
-  "$comment": "sample properties dictionary"
-  "properties": {
-    "property_0_name": {
-      "type": "string",
-      "description": "this is my first property"
-    },
-    "property_1_name": {
-      "type": "integer",
-      "description": "this is my second property"
-    }
-  }
-  
-```
-
-</div>
-
-<div>
-
-<div class="secondary-content">
 
 <table id="property">
   <tr>
@@ -227,12 +181,22 @@ Be sure to include the following line in your `manifest.json` file in order to g
 </div>
 
 ```json
-  "$comment": "sample property object"
-  "property_0_name": {
-    "type": "string",
-    "description": "this is my first property"
+  "$comment": "sample parameters object"
+  "*_parameters":{
+    "properties": {
+      "property_0_name": {
+        "type": "string",
+        "description": "this is my first property"
+      },
+      "property_1_name": {
+        "type": "integer",
+        "description": "this is my second property"
+      }
+    },
+    "required": [
+      "property_0_name"
+    ]
   }
-  
 ```
 
 </div>
