@@ -18,7 +18,7 @@ Notably this file informs slack of the definitions for:
 * [functions](/bolt-python/future/concepts#manifest-functions)
 * [workflows](/bolt-python/future/concepts#manifest-workflows)
 
-`manifest.json` should be located at the top level our example projects, along with a `triggers` folder containing
+`manifest.json` is located at the top level <a href="https://github.com/slack-samples/bolt-python-starter-template" target="_blank">our example projects</a>, along with a `triggers` folder containing
 `*_trigger.json` files that define the <a href="https://api.slack.com/future/triggers" target="_blank">triggers</a>
 for your app.
 
@@ -34,10 +34,10 @@ for your app.
 
 <br>
 
-#### Linting, Prediction & Validation
+#### Linting, prediction & validation
 
 Syntax and formatting check is required to efficiently edit your `manifest.json`, multiple IDEs are able to support
-this, namely; <a href="https://code.visualstudio.com/docs/languages/json#_mapping-in-the-json" target="_blank">visual studio code</a>, <a href="https://www.jetbrains.com/help/pycharm/json.html#ws_json_schema_add_custom" target="_blank">pycharm</a>, <a href="https://www.sublimetext.com/" target="_blank">sublime text</a> (via <a href="https://packagecontrol.io/packages/LSP-json" target="_blank">lsp-json</a>) and many more.
+this, namely: <a href="https://code.visualstudio.com/docs/languages/json#_mapping-in-the-json" target="_blank">visual studio code</a>, <a href="https://www.jetbrains.com/help/pycharm/json.html#ws_json_schema_add_custom" target="_blank">pycharm</a>, <a href="https://www.sublimetext.com/" target="_blank">sublime text</a> (via <a href="https://packagecontrol.io/packages/LSP-json" target="_blank">lsp-json</a>) and many more.
 
 To get **manifest prediction & validation** in your IDE, include the following line in your `manifest.json` file:
 
