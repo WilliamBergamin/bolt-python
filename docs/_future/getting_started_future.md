@@ -17,30 +17,17 @@ Find out about the next-generation platform on Slack's <a href="https://api.slac
 
 ---
 
-### Limitations
+### Setting up {#setting-up}
 
-Bolt for Python supports app development using next-gen platform features like Functions, Workflows and tools such as the Slack CLI alongside all current generally available Slack Platform features.
-
-#### We do not yet support
-
-- Deployment to secure and managed Slack infrastructure
-- Datastores API <a href="https://api.slack.com/future/datastores" target="_blank">Datastores</a> functionality.
-
-> If you'd like to deploy your app with Slack infrastructure, consider building your next-generation application with the Deno Slack API. You can get started with that <a href="https://api.slack.com/future/get-started" target="_blank">here</a>.
-
----
-
-### Setting up the CLI {#setting-up-cli}
+#### Slack CLI {#setting-up-cli}
 
 To build a next-generation app with Bolt for Python, you'll need to get the Slack CLI.
 
-**Install the Slack Cli** by following this <a href="https://api.slack.com/future/quickstart" target="_blank">Quickstart</a>. Since we won't be using Deno to build our next-generation app, you can skip any instructions related to installing Deno or creating an app using a Deno template. Once you've logged into the CLI using `slack login` and verified your login using `slack auth list`, you can proceed with the instructions in this guide.
+Install the Slack Cli by following this <a href="https://api.slack.com/future/quickstart" target="_blank">Quickstart</a>. Since we won't be using Deno to build our next-generation app, you can skip any instructions related to installing Deno or creating an app using a Deno template. Once you've logged into the CLI using `slack login` and verified your login using `slack auth list`, you can proceed with the instructions in this guide.
 
----
+#### Dependencies {#setting-up-dependencies}
 
-### Install dependencies {#install-dependencies}
-
-Once the CLI is set up, make sure your machine has the most recent version of <a href="https://www.python.org/" target="_blank">Python</a> installed.You can install Python through a package manager (such as <a href="https://brew.sh/" target="_blank">Homebrew</a> for Mac) or directly from the <a href="https://www.python.org/downloads/" target="_blank">website</a>.
+Once the CLI is set up, make sure your machine has the most recent version of <a href="https://www.python.org/" target="_blank">Python</a> installed. You can install Python through a package manager (such as <a href="https://brew.sh/" target="_blank">Homebrew</a> for Mac) or directly from the <a href="https://www.python.org/downloads/" target="_blank">website</a>.
 
 ---
 
@@ -138,6 +125,19 @@ Then, submit the form. In the specified channel submitted in the form, you shoul
 
 The full app flow can be seen here:
 ![Hello World app](https://slack.dev/bolt-js/assets/hello-world-demo.gif "Hello World app")
+
+---
+
+### Limitations
+
+Bolt for Python supports app development using next-gen platform features like Functions, Workflows and tools such as the Slack CLI alongside all current generally available Slack Platform features.
+
+#### We do not yet support
+
+- Deployment to secure and managed Slack infrastructure
+- Datastores API <a href="https://api.slack.com/future/datastores" target="_blank">Datastores</a> functionality.
+
+> If you'd like to deploy your app with Slack infrastructure, consider building your next-generation application with the Deno Slack API. You can get started with that <a href="https://api.slack.com/future/get-started" target="_blank">here</a>.
 
 ---
 

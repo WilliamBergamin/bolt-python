@@ -1,6 +1,6 @@
 var searchTag = "details";
 
-window.addEventListener("hashchange", (event) => {
+function update_location_to_hidden_hash() {
   const hash = location.hash.substring(1);
   if (!hash) return;
   const details = document.getElementsByTagName(searchTag);
@@ -11,4 +11,7 @@ window.addEventListener("hashchange", (event) => {
       break;
     }
   }
-});
+}
+
+window.addEventListener("hashchange", update_location_to_hidden_hash);
+window.addEventListener("load", update_location_to_hidden_hash);

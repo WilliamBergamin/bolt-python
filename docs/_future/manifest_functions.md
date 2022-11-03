@@ -13,78 +13,46 @@ Your app can [listen to functions](/bolt-python/future/concepts#functions) defin
 
 <table id="functions_dict">
   <tr>
-    <th>
-      <h5 id="functions_dict">functions</h5>
-    </th>
-    <th>
-      <code>dictionary</code>
-    </th>
+    <th><h5 id="functions_dict">functions</h5></th>
+    <th>dictionary</th>
     <th></th>
   </tr>
   <tr>
-    <td>
-      <code>key</code>
-    </td>
-    <td>
-      <code>string</code>
-    </td>
+    <td><b><code>key</code></b></td>
+    <td>string</td>
     <td>defines the function's <code>callback_id</code></td>
   </tr>
   <tr>
-    <td>
-      <code>value</code>
-    </td>
-    <td>
-      <a href="#function">function object</a>
-    </td>
+    <td><b><code>value</code></b></td>
+    <td><a href="#function">function</a></td>
     <td>defines the function</td>
   </tr>
 </table>
 
 <table id="function">
   <tr>
-    <th>
-      <h5>function</h5>
-    </th>
-    <th>
-      <code>object</code>
-    </th>
+    <th><h5>function</h5></th>
+    <th>object</th>
     <th></th>
   </tr>
   <tr>
-    <td>
-      <code>title</code>
-    </td>
-    <td>
-      <code>string</code>
-    </td>
+    <td><b><code>title</code></b></td>
+    <td>string</td>
     <td>defines the title</td>
   </tr>
   <tr>
-    <td>
-      <code>description</code>
-    </td>
-    <td>
-      <code>string</code>
-    </td>
+    <td><b><code>description</code></b></td>
+    <td>string</td>
     <td>defines the description</td>
   </tr>
   <tr>
-    <td>
-      <code>input_parameters</code>
-    </td>
-    <td>
-      <a href="#parameters">parameters object</a>
-    </td>
+    <td><b><code>input_parameters</code></b></td>
+    <td><a href="#parameters">parameters</a></td>
     <td>defines the inputs</td>
   </tr>
   <tr>
-    <td>
-      <code>output_parameters</code>
-    </td>
-    <td>
-      <a href="#parameters">parameters object</a>
-    </td>
+    <td><b><code>output_parameters</code></b></td>
+    <td><a href="#parameters">parameters</a></td>
     <td>defines the outputs</td>
   </tr>
 </table>

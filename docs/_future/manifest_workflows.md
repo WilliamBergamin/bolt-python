@@ -18,117 +18,69 @@ trigger → workflow → step → function
 
 <table id="workflows">
   <tr>
-    <th>
-      <h5>workflows</h5>
-    </th>
-    <th>
-      <code>dictionary</code>
-    </th>
+    <th><h5>workflows</h5></th>
+    <th>dictionary</th>
     <th></th>
   </tr>
   <tr>
-    <td>
-      <code>key</code>
-    </td>
-    <td>
-      <code>string</code>
-    </td>
+    <td><b><code>key</code></b></td>
+    <td>string</td>
     <td>defines the workflows <code>id</code></td>
   </tr>
   <tr>
-    <td>
-      <code>value</code>
-    </td>
-    <td>
-      <a href="#workflow">workflow object</a>
-    </td>
+    <td><b><code>value</code></b></td>
+    <td><a href="#workflow">workflow</a></td>
     <td>defines the function</td>
   </tr>
 </table>
 
 <table id="workflow">
   <tr>
-    <th>
-      <h5>workflow</h5>
-    </th>
-    <th>
-      <code>object</code>
-    </th>
+    <th><h5>workflow</h5></th>
+    <th>object</th>
     <th></th>
   </tr>
   <tr>
-    <td>
-      <code>title</code>
-    </td>
-    <td>
-      <code>string</code>
-    </td>
+    <td><b><code>title</code></b></td>
+    <td>string</td>
     <td>defines the title</td>
   </tr>
   <tr>
-    <td>
-      <code>description</code>
-    </td>
-    <td>
-      <code>string</code>
-    </td>
+    <td><b><code>description</code></b></td>
+    <td>string</td>
     <td>defines the description</td>
   </tr>
   <tr>
-    <td>
-      <code>input_parameters</code>
-    </td>
-    <td>
-      <a href="#parameters">parameters object</a>
-    </td>
+    <td><b><code>input_parameters</code></b></td>
+    <td><a href="#parameters">parameters</a></td>
     <td>defines the inputs</td>
   </tr>
   <tr>
-    <td>
-      <code>steps</code>
-    </td>
-    <td>
-      <code>list[<a href="#parameters">parameters object</a>]</code>
-    </td>
+    <td><b><code>steps</code></b></td>
+    <td>list[<a href="#parameters">parameters</a>]</td>
     <td>defines the steps</td>
   </tr>
 </table>
 
 <table id="step">
   <tr>
-    <th>
-      <h5>step</h5>
-    </th>
-    <th>
-      <code>object</code>
-    </th>
+    <th><h5>step</h5></th>
+    <th>object</th>
     <th></th>
   </tr>
   <tr>
-    <td>
-      <code>id</code>
-    </td>
-    <td>
-      <code>string</code>
-    </td>
+    <td><b><code>id</code></b></td>
+    <td>string</td>
     <td>defines the order of the steps</td>
   </tr>
   <tr>
-    <td>
-      <code>function_id</code>
-    </td>
-    <td>
-      <code>string</code>
-    </td>
+    <td><b><code>function_id</code></b></td>
+    <td>string</td>
     <td>identifies the <code>function</code> to evoke</td>
   </tr>
   <tr>
-    <td>
-      <code>inputs</code>
-    </td>
-    <td>
-      <code>dict[string:string]</code>
-    </td>
+    <td><b><code>inputs</code></b></td>
+    <td>dict[string:string]</td>
     <td>defines the inputs to provide to the function</td>
   </tr>
 </table>

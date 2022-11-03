@@ -41,7 +41,10 @@ def sample_func(event, complete: Complete):
 
 <div class="secondary-content">
 
-The `function()` method returns a `SlackFunction` decorator object. This object can be used by your app to set up listeners for interactive behaviors such as [actions](/bolt-python/concepts#action-respond) and [views](/bolt-python/concepts#view_submissions). These interactive behaviors will be scoped to your function.
+The `function()` method returns a `SlackFunction` decorator object. This object can be used by your app to set up interactive listeners such as [actions](/bolt-python/concepts#action-respond) and [views](/bolt-python/concepts#view_submissions). These listener listen to events created during the handling of your `function` event. Additionally they will only be called when a user interacts with a block element that has the following attributes:
+
+* It was created during the handling of a `function` event
+* The `action_id` matches the interactive listeners `action_id`
 
 These listeners behave similarly to the ones assigned directly to your app. the notable difference is that `complete()` must be called once your function is completed.
 
