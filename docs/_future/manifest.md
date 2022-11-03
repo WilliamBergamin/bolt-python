@@ -48,6 +48,12 @@ To get **manifest prediction & validation** in your IDE, include the following l
 }
 ```
 
+Using the <a href="https://api.slack.com/future/tools/cli/commands" target="_blank">Slack CLI</a> you can validate your `manifest.json` against the Slack API with:
+
+```bash
+slack manifest validate
+```
+
 </div>
 
 <div>
