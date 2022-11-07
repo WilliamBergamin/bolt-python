@@ -41,7 +41,7 @@ To create the app, you'll run the following command:
 slack create my-app -t slack-samples/bolt-python-starter-template -b future
 ```
 
-This command creates an app through the CLI by cloning a specified template. In this case, the template is the <a href="https://github.com/slack-samples/bolt-python-starter-template/tree/future" target="_blank">Bolt for Python Starter Template</a> on the `future` branch. This starter template includes a "Hello World" example that demonstrates how to use <a href="/bolt-python/future/concepts#manifest-workflows" target="_blank">built-in</a> and <a href="/bolt-python/future/concepts#functions" target="_blank">custom</a> Functions, <a href="https://api.slack.com/future/triggers" target="_blank">Triggers</a> and <a href="/bolt-python/future/concepts#manifest-workflows" target="_blank">Workflows</a>.
+This command creates an app through the CLI by cloning a specified template. In this case, the template is the <a href="https://github.com/slack-samples/bolt-python-starter-template/tree/future" target="_blank">Bolt for Python Starter Template</a> on the `future` branch. This starter template includes a "Hello World" example that demonstrates how to use <a href="/bolt-python/future/concepts#built-in-functions" target="_blank">built-in</a> and <a href="/bolt-python/future/concepts#functions" target="_blank">custom</a> Functions, <a href="https://api.slack.com/future/triggers" target="_blank">Triggers</a> and <a href="/bolt-python/future/concepts#manifest-workflows" target="_blank">Workflows</a>.
 
 Once the app is successfully created, you should see a message like this:
 
@@ -143,4 +143,4 @@ Bolt for Python supports app development using next-gen platform features like F
 
 ### Next steps {#next-steps}
 
-Now we have a working instance of a next-generation app in your workspace and you've seen it in action! You can explore on your own and dive into the code yourself here or continue your learning journey by diving into [App Manifests](/bolt-python/future/concepts#manifests) or looking into adding more [Functions](/bolt-python/future/concepts#functions), [Workflows](/bolt-python/future/concepts#manifest-workflows), and [Triggers](#setup-trigger) to your app!
+Now we have a working instance of a next-generation app in your workspace and you've seen it in action! You can explore on your own and dive into the code yourself <a href="https://github.com/slack-samples/bolt-python-starter-template/tree/future" target="_blank">here</a> or continue your learning journey by diving into [App Manifests](/bolt-python/future/concepts#manifests) or looking into adding more [Functions](/bolt-python/future/concepts#functions), [Workflows](/bolt-python/future/concepts#manifest-workflows), and [Triggers](#setup-trigger) to your app!

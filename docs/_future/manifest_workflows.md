@@ -8,7 +8,7 @@ layout: future
 
 <div class="section-content">
 
-Your app can use functions by referencing them in workflows. Your functions and the ones provided by slack can be used as steps in workflow definitions.
+Your app can use functions by referencing them in workflows. Your functions and the ones provided by Slack can be used as steps in workflow definitions.
 
 Workflows are invoked by <a href="https://api.slack.com/future/triggers" target="_blank">triggers</a>. You will need to set up a trigger in order to use your defined workflows.
 
@@ -127,7 +127,7 @@ trigger → workflow → step → function
 
 <details class="secondary-wrapper" >
   
-<summary class="section-head" markdown="0">
+<summary id="built-in-functions" class="section-head" markdown="0">
   <h4 class="section-head">Built in functions</h4>
 </summary>
 

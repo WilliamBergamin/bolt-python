@@ -13,10 +13,10 @@ Your project should contain a `manifest.json` file that defines your app's manif
 Refer to <a href="https://api.slack.com/reference/manifests" target="_blank">app manifest documentation</a> to learn
 about the available manifest configurations.
 
-Notably this file informs slack of the definitions for:
+Notably this file informs Slack of the definitions for:
 
-* [functions](/bolt-python/future/concepts#manifest-functions)
-* [workflows](/bolt-python/future/concepts#manifest-workflows)
+* [Functions](/bolt-python/future/concepts#manifest-functions)
+* [Workflows](/bolt-python/future/concepts#manifest-workflows)
 
 `manifest.json` is located at the top level <a href="https://github.com/slack-samples/bolt-python-starter-template" target="_blank">our example projects</a>, along with a `triggers` folder containing
 `*_trigger.json` files that define the <a href="https://api.slack.com/future/triggers" target="_blank">triggers</a>
