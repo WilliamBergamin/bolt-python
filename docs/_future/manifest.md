@@ -57,6 +57,7 @@ slack manifest validate
 </div>
 
 <div>
+<span class="annotation">Refer to <a href="https://github.com/slack-samples/bolt-python-starter-template/blob/future/manifest.json" target="_blank">our template project</a> to view a full version of <code>manifest.json</code>.</span>
 ```json
 {
   "$schema": "https://raw.githubusercontent.com/slackapi/manifest-schema/main/manifest.schema.json",

@@ -10,9 +10,8 @@ layout: future
 
 Your app can use Functions by referencing them in Workflows. Your Functions and the ones provided by Slack can be used as steps in Workflow definitions.
 
-Workflows are invoked by <a href="https://api.slack.com/future/triggers" target="_blank">Triggers</a>. You will need to set up a Trigger in order to use your defined workflows.
+Workflows are invoked by <a href="https://api.slack.com/future/triggers" target="_blank">Triggers</a>. You will need to set up a Trigger in order to use your defined workflows. Triggers, Workflows, and Functions work together in the following way:
 
-Triggers, Workflows, and Functions work together in the following way:
 Trigger → Workflow → Workflow Step → Function
 
 Your App Manifest, found at `manifest.json`, is where you will define your workflows.
@@ -89,6 +88,7 @@ Your App Manifest, found at `manifest.json`, is where you will define your workf
 </div>
 
 <div>
+<span class="annotation">Refer to <a href="https://github.com/slack-samples/bolt-python-starter-template/blob/future/manifest.json" target="_blank">our template project</a> to view a full version of <code>manifest.json</code>.</span>
 ```json
   "workflows": {
     "sample_workflow": {

@@ -7,9 +7,7 @@ layout: future
 ---
 
 <div class="section-content">
-Your app can [listen to Functions](/bolt-python/future/concepts#functions) defined and created by you. In order for this to work, Slack must know of their existence. To do this, you must define them in your [App Manifest](/bolt-python/concepts#manifest).
-
-`manifest.json` is where you define your functions for Slack.
+Your app can [listen to Functions](/bolt-python/future/concepts#functions) defined and created by you. In order for this to work, Slack must know of their existence. To do this, you must define them in your [App Manifest](/bolt-python/concepts#manifest) also known as `manifest.json` in your project.
 
 <table id="functions_dict">
   <tr>
@@ -60,6 +58,7 @@ Your app can [listen to Functions](/bolt-python/future/concepts#functions) defin
 </div>
 
 <div>
+<span class="annotation">Refer to <a href="https://github.com/slack-samples/bolt-python-starter-template/blob/future/manifest.json" target="_blank">our template project</a> to view a full version of <code>manifest.json</code>.</span>
 ```json
   "functions": {
     "sample_function": {
