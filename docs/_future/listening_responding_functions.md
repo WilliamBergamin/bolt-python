@@ -8,7 +8,7 @@ layout: future
 
 <div class="section-content">
 
-Your app can use the `function()` method to listen to incoming function requests. The method requires a function `callback_id` of type `str`. This `callback_id` must also be defined in your [manifest function](/bolt-python/future/concepts#manifest-functions) definition. Functions must eventually be completed with `complete()` to inform Slack that your app has processed the function request. There are two ways to complete a function with `complete()` which requires **one of two** keyword arguments `outputs` or `error`.
+Your app can use the `function()` method to listen to incoming function requests. The method requires a function `callback_id` of type `str`. This `callback_id` must also be defined in your [Function](/bolt-python/future/concepts#manifest-functions) definition. Functions must eventually be completed with the `complete()` function to inform Slack that your app has processed the function request. `complete()` requires **one of two** keyword arguments: `outputs` or `error`. There are two ways to complete a Function with `complete()`:
 
 * `outputs` of type `dict` completes your function **successfully** and provide a dictionary containing the outputs of your function as defined in the apps manifest.
 * `error` of type `str` completes your function **unsuccessfully** and provides a message containing information regarding why your function was not successful.

@@ -13,13 +13,13 @@ permalink: /tutorial/migrate-existing-app
 If you have an existing Slack app written with Bolt for Python that you'd like to migrate to the <a href="https://api.slack.com/future/intro" target="_blank">next-generation platform</a>, this guide is for you!
 </div>
 
-To get started with a new Bolt for Python application take a look at this [Getting Started guide](/bolt-python/tutorial/migrate-existing-app) guide instead.
+To get started with a new Bolt for Python application take a look at this [Getting Started guide](/bolt-python/tutorial/getting-started-future) guide instead.
 
 ---
 
 ### Prerequisites {#prerequisites}
 
-Before we get started, make sure you've followed the [Setting Up step](/bolt-python/tutorial/getting-started-future#setting-up) of the [Getting Started guide](/bolt-python/tutorial/migrate-existing-app) to install required dependencies.
+Before we get started, make sure you've followed the [Setting Up step](/bolt-python/tutorial/getting-started-future#setting-up) of the [Getting Started guide](/bolt-python/tutorial/getting-started-future) to install required dependencies.
 
 ---
 
@@ -52,7 +52,7 @@ Add this `manifest.json` to your project root. This represents your project's ex
 }
 ```
 
-To learn more about the `manifest.json` take a look at the [manifest concept](/bolt-python/future/concepts#manifest).
+To learn more about the `manifest.json` take a look at the [Manifest concept](/bolt-python/future/concepts#manifest).
 
 ---
 
@@ -95,10 +95,10 @@ Now you're ready to start adding [Functions](/bolt-python/future/concepts#functi
 
 ### Updating your app configuration {#update-app}
 
-You have probably made changes to your app’s manifest (adding a Function or a Workflow, for example). To sync your production app’s configuration with the changes you’ve made in development:
+You have probably made changes to your app’s manifest (adding a Function or a Workflow, for example). To sync your production app’s configuration with the changes you’ve made locally in your manifest:
 
 1. Authenticate the Slack CLI with your desired production workspace using `slack login`.
-2. Head over to `./slack/apps.json` and make sure an entry exists for your workspace with the current `app_id` and `team_id` of the workspace.
+2. In your project, head over to `./slack/apps.json` and make sure an entry exists for your workspace with the current `app_id` and `team_id` of the workspace.
 
     ```bash
     {

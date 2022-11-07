@@ -9,8 +9,8 @@ layout: future
 
 <div class="section-content">
 
-Your project should contain a `manifest.json` file that defines your app's manifest, where you can configure your app.
-Refer to <a href="https://api.slack.com/reference/manifests" target="_blank">app manifest documentation</a> to learn
+Your project should contain a `manifest.json` file that defines your app's manifest, which is where you can configure your application name and scopes, declare the functions your app will use, and more.
+Refer to the <a href="https://api.slack.com/reference/manifests" target="_blank">App Manifest documentation</a> to learn
 about the available manifest configurations.
 
 Notably this file informs Slack of the definitions for:
@@ -18,7 +18,7 @@ Notably this file informs Slack of the definitions for:
 * [Functions](/bolt-python/future/concepts#manifest-functions)
 * [Workflows](/bolt-python/future/concepts#manifest-workflows)
 
-`manifest.json` is located at the top level <a href="https://github.com/slack-samples/bolt-python-starter-template" target="_blank">our example projects</a>, along with a `triggers` folder containing
+`manifest.json` is located at the top level of <a href="https://github.com/slack-samples/bolt-python-starter-template" target="_blank">our example projects</a>, along with a `triggers` folder containing
 `*_trigger.json` files that define the <a href="https://api.slack.com/future/triggers" target="_blank">triggers</a>
 for your app.
 
@@ -36,8 +36,8 @@ for your app.
 
 #### Linting, prediction & validation
 
-Syntax and formatting check is required to efficiently edit your `manifest.json`, multiple IDEs are able to support
-this, namely: <a href="https://code.visualstudio.com/docs/languages/json#_mapping-in-the-json" target="_blank">visual studio code</a>, <a href="https://www.jetbrains.com/help/pycharm/json.html#ws_json_schema_add_custom" target="_blank">pycharm</a>, <a href="https://www.sublimetext.com/" target="_blank">sublime text</a> (via <a href="https://packagecontrol.io/packages/LSP-json" target="_blank">lsp-json</a>) and many more.
+Syntax and formatting checks are required to efficiently edit your `manifest.json`. Multiple IDEs are able to support
+this, namely: <a href="https://code.visualstudio.com/docs/languages/json#_mapping-in-the-json" target="_blank">Visual Studio Code</a>, <a href="https://www.jetbrains.com/help/pycharm/json.html#ws_json_schema_add_custom" target="_blank">Pycharm</a>, <a href="https://www.sublimetext.com/" target="_blank">Sublime Text</a> (via <a href="https://packagecontrol.io/packages/LSP-json" target="_blank">LSP-json</a>) and many more.
 
 To get **manifest prediction & validation** in your IDE, include the following line in your `manifest.json` file:
 

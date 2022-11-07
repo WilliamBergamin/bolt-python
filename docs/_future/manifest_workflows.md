@@ -8,13 +8,14 @@ layout: future
 
 <div class="section-content">
 
-Your app can use functions by referencing them in workflows. Your functions and the ones provided by Slack can be used as steps in workflow definitions.
+Your app can use Functions by referencing them in Workflows. Your Functions and the ones provided by Slack can be used as steps in Workflow definitions.
 
-Workflows are invoked by <a href="https://api.slack.com/future/triggers" target="_blank">triggers</a>. You will need to set up a trigger in order to use your defined workflows.
+Workflows are invoked by <a href="https://api.slack.com/future/triggers" target="_blank">Triggers</a>. You will need to set up a Trigger in order to use your defined workflows.
 
-trigger → workflow → step → function
+Triggers, Workflows, and Functions work together in the following way:
+Trigger → Workflow → Workflow Step → Function
 
-`manifest.json` is where you define your workflows.
+Your App Manifest, found at `manifest.json`, is where you will define your workflows.
 
 <table id="workflows">
   <tr>
@@ -25,7 +26,7 @@ trigger → workflow → step → function
   <tr>
     <td><b><code>key</code></b></td>
     <td>string</td>
-    <td>defines the workflows <code>id</code></td>
+    <td>defines the workflow's <code>id</code></td>
   </tr>
   <tr>
     <td><b><code>value</code></b></td>
@@ -128,11 +129,11 @@ trigger → workflow → step → function
 <details class="secondary-wrapper" >
   
 <summary id="built-in-functions" class="section-head" markdown="0">
-  <h4 class="section-head">Built in functions</h4>
+  <h4 class="section-head">Built-in functions</h4>
 </summary>
 
 <div class="secondary-content">
-Slack provides built in functions that can be used by a workflow to accomplish simple tasks, add these functions to your workflow steps in order to use them.
+Slack provides built-in functions that can be used by a Workflow to accomplish simple tasks. You can add these functions to your workflow steps in order to use them.
 
 - <a href="https://api.slack.com/future/functions#send-message" target="_blank">Send message</a>
 - <a href="https://api.slack.com/future/functions#open-a-form" target="_blank">Open a form</a>
