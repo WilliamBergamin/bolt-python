@@ -17,6 +17,19 @@ Find out about the next-generation platform on Slack's <a href="https://api.slac
 
 ---
 
+### Limitations
+
+Bolt for Python supports app development using next-gen platform features like Functions, Workflows and tools such as the Slack CLI alongside all current generally available Slack Platform features.
+
+#### We do not yet support
+
+- Deployment to secure and managed Slack infrastructure
+- Datastores API <a href="https://api.slack.com/future/datastores" target="_blank">Datastores</a> functionality.
+
+> If you'd like to deploy your app with Slack infrastructure, consider building your next-generation application with the Deno Slack API. You can get started with that <a href="https://api.slack.com/future/get-started" target="_blank">here</a>.
+
+---
+
 ### Setting up {#setting-up}
 
 #### Slack CLI {#setting-up-cli}
@@ -125,19 +138,6 @@ Then, submit the form. In the specified channel submitted in the form, you shoul
 
 The full app flow can be seen here:
 ![Hello World app](https://slack.dev/bolt-js/assets/hello-world-demo.gif "Hello World app")
-
----
-
-### Limitations
-
-Bolt for Python supports app development using next-gen platform features like Functions, Workflows and tools such as the Slack CLI alongside all current generally available Slack Platform features.
-
-#### We do not yet support
-
-- Deployment to secure and managed Slack infrastructure
-- Datastores API <a href="https://api.slack.com/future/datastores" target="_blank">Datastores</a> functionality.
-
-> If you'd like to deploy your app with Slack infrastructure, consider building your next-generation application with the Deno Slack API. You can get started with that <a href="https://api.slack.com/future/get-started" target="_blank">here</a>.
 
 ---
 

@@ -4,8 +4,10 @@ title: Deploy your app
 lang: en
 slug: deploy-your-app
 order: 6
-layout: future
+layout: tutorial
+permalink: /tutorial/deploy-your-app
 ---
+# Deploy your app <span class="label-beta">BETA</span>
 
 <div class="section-content">
 Instructions for deploying your next-generation Bolt Python application to third-party infrastructure are coming soon! Stay tuned.
