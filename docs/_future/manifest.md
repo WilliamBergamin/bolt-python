@@ -13,7 +13,7 @@ Your project should contain a `manifest.json` file that defines your app's manif
 Refer to the <a href="https://api.slack.com/reference/manifests" target="_blank">App Manifest documentation</a> to learn
 about the available manifest configurations.
 
-Notably this file informs Slack of the definitions for:
+Notably, the App Manifest informs Slack of the definitions for:
 
 * [Functions](/bolt-python/future/concepts#manifest-functions)
 * [Workflows](/bolt-python/future/concepts#manifest-workflows)

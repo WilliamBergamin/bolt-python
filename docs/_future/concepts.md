@@ -6,7 +6,6 @@ order: 0
 layout: future
 permalink: /future/concepts
 ---
-
 # Slack developer beta concepts <span class="label-beta">BETA</span>
 
 <div class="section-content">

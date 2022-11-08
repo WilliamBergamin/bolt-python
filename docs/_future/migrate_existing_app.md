@@ -13,7 +13,7 @@ permalink: /tutorial/migrate-existing-app
 If you have an existing Slack app written with Bolt for Python that you'd like to migrate to the <a href="https://api.slack.com/future/intro" target="_blank">next-generation platform</a>, this guide is for you!
 </div>
 
-To get started with a new Bolt for Python application take a look at this [Getting Started guide](/bolt-python/tutorial/getting-started-future) guide instead.
+To get started with a new Bolt for Python application take a look at this [Getting Started guide](/bolt-python/tutorial/getting-started-future) instead.
 
 ---
 
@@ -35,7 +35,7 @@ pip install slack-bolt==*.dev*
 slack-bolt==*.dev*
 ```
 
-Add a `slack.json` file to your local project root containing the contents of our [template slack.json](https://github.com/slack-samples/bolt-python-starter-template/blob/future/slack.json).
+Then, add a `slack.json` file to your local project root containing the contents of our [template slack.json](https://github.com/slack-samples/bolt-python-starter-template/blob/future/slack.json).
 
 ---
 
@@ -56,7 +56,7 @@ To learn more about the `manifest.json` take a look at the [Manifest concept](/b
 
 ---
 
-Now let's run the Slack CLI command `slack manifest` to generate your manifest. It should contain at least these settings.  
+Now let's run the Slack CLI command `slack manifest` to generate your manifest. It should contain at least these settings:
 
 ```bash
 {
@@ -75,7 +75,7 @@ Now let's run the Slack CLI command `slack manifest` to generate your manifest. 
 }
 ```
 
-To validate your App's configuration with the Slack API:
+You can also run this command to validate your App's configuration with the Slack API:
 
 ```bash
 slack manifest validate

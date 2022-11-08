@@ -21,9 +21,7 @@ sidebar_style: main
 
       <div id="future">
         {% assign future_sections = site.future | sort: "order" | where: "lang", page.lang %}
-        {% for
-        section in
-        future_sections %}
+        {% for section in future_sections %}
         {% if section.layout != "tutorial" %}
         {% if section.order == 0 %}
         <div class="section-wrapper">
