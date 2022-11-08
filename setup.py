@@ -19,7 +19,7 @@ test_dependencies = [
     "Werkzeug>=1,<2",  # TODO: Flask-Sockets is not yet compatible with Flask 2.x
     "itsdangerous==2.0.1",  # TODO: Flask-Sockets is not yet compatible with Flask 2.x
     "Jinja2==3.0.3",  # https://github.com/pallets/flask/issues/4494
-    "black==22.8.0",
+    "black==22.8.0",  # Until we drop Python 3.6 support, we have to stay with this version
     "click<=8.0.4",  # black is affected by https://github.com/pallets/click/issues/2225
 ]
 
@@ -109,6 +109,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: Implementation :: CPython",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
