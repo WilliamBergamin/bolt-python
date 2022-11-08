@@ -281,41 +281,37 @@ span.beta {
   grid-area: code;
 }
 
-pre {
-  background-color: var(--light-grey) !important;
-  background-image: none;
-  padding: 1.2em;
-  border: 1px solid #DDDDDD;
-}
-
 pre.structure {
   padding: 0.2em;
   font-size: 0.9em;
   line-height: 1.1em;
 }
-pre code pre {
-  padding: 0;
-  font-size: 0.9em;
-  line-height: 2.2em;
+
+pre.highlight {
+  background-color: var(--light-grey) !important;
+  background-image: none;
+  padding: 1.2em 2em;
+  border: 1px solid var(--soft-grey);
+  line-height: 2em;
+  border-radius: 1em;
 }
 
-pre code span {
+pre.highlight code {
+  padding: 0;
+  font-size: 0.9em !important;
+}
+
+pre.highlight code span {
   padding: 0;
   margin: 0;
   height: 0;
 }
 
-table, pre tbody, pre tbody td, pre tbody td pre {
+table {
   padding: 0;
   border: 0;
   margin: 0;
   text-align: left;
-}
-
-pre tbody td.gl pre {
-  color: #999988;
-  padding-right: 1.6em;
-  user-select: none;
 }
 
 .content .section-wrapper .section-content {
@@ -451,17 +447,17 @@ summary h4 {
 
 
 /*
- * Github theme stylesheet from: http://jwarby.github.io/jekyll-pygments-themes/languages/javascript.html
+ * Github theme stylesheet from: http://jwarby.github.io/jekyll-pygments-themes/languages/python.html
  */
  .highlight .hll { background-color: #ffffcc }
- .highlight .c { color: #999988; } /* Comment */
+ .highlight .c { color: #999988; font-style: italic } /* Comment */
  .highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
  .highlight .k { color: #000000; font-weight: bold } /* Keyword */
  .highlight .o { color: #000000; font-weight: bold } /* Operator */
- .highlight .cm { color: #999988; } /* Comment.Multiline */
- .highlight .cp { color: #999999; font-weight: bold; } /* Comment.Preproc */
- .highlight .c1 { color: #999988; } /* Comment.Single */
- .highlight .cs { color: #999999; font-weight: bold; } /* Comment.Special */
+ .highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
+ .highlight .cp { color: #999999; font-weight: bold; font-style: italic } /* Comment.Preproc */
+ .highlight .c1 { color: #999988; font-style: italic } /* Comment.Single */
+ .highlight .cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
  .highlight .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
  .highlight .ge { color: #000000; font-style: italic } /* Generic.Emph */
  .highlight .gr { color: #aa0000 } /* Generic.Error */
