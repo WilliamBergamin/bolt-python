@@ -21,13 +21,13 @@ Alternatively, workflow steps can also be created using the `WorkflowStepBuilder
 
 <div>
 <span class="annotation">Refer to the module documents (<a href="https://slack.dev/bolt-python/api-docs/slack_bolt/kwargs_injection/args.html" target="_blank">common</a> / <a href="https://slack.dev/bolt-python/api-docs/slack_bolt/workflows/step/utilities/index.html" target="_blank">step-specific</a>) to learn the available arguments.</span>
+
 ```python
 import os
 from slack_bolt import App
 from slack_bolt.workflows.step import WorkflowStep
 
 # Initiate the Bolt app as you normally would
-
 app = App(
     token=os.environ.get("SLACK_BOT_TOKEN"),
     signing_secret=os.environ.get("SLACK_SIGNING_SECRET")
@@ -43,7 +43,6 @@ def execute(step, complete, fail):
     pass
 
 # Create a new WorkflowStep instance
-
 ws = WorkflowStep(
     callback_id="add_task",
     edit=edit,
@@ -52,8 +51,7 @@ ws = WorkflowStep(
 )
 
 # Pass Step to set up listeners
-
 app.step(ws)
-
 ```
+
 </div>
