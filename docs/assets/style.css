@@ -299,6 +299,7 @@ pre.structure {
 /* Code block with column numbers */
 pre.highlight {
   line-height: 2em;
+  overflow-x: auto;
 }
 
 pre.highlight code span {
@@ -311,6 +312,7 @@ pre.highlight code pre {
   padding: 0;
   border: 0;
   font-size: 0.9em;
+  overflow: visible;
 }
 
 table.rouge-table, td.rouge-code, td.rouge-gutter  {
