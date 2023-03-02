@@ -49,6 +49,7 @@ from .context.ack.async_ack import AsyncAck
 from .context.async_context import AsyncBoltContext
 from .context.respond.async_respond import AsyncRespond
 from .context.say.async_say import AsyncSay
+from .context.complete.async_complete import AsyncComplete
 from .listener.async_listener import AsyncListener
 from .listener_matcher.async_listener_matcher import AsyncCustomListenerMatcher
 from .request.async_request import AsyncBoltRequest
@@ -59,6 +60,7 @@ __all__ = [
     "AsyncBoltContext",
     "AsyncRespond",
     "AsyncSay",
+    "AsyncComplete",
     "AsyncListener",
     "AsyncCustomListenerMatcher",
     "AsyncBoltRequest",

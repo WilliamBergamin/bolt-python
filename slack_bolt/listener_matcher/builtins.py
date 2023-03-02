@@ -6,6 +6,7 @@ from logging import Logger
 from slack_bolt.error import BoltError
 from slack_bolt.request.payload_utils import (
     is_block_actions,
+    is_function,
     is_global_shortcut,
     is_message_shortcut,
     is_attachment_action,
@@ -21,6 +22,7 @@ from slack_bolt.request.payload_utils import (
     is_shortcut,
     to_action,
     is_workflow_step_save,
+    is_function_interactivity,
 )
 from ..logger.messages import error_message_event_type
 from ..util.utils import get_arg_names_of_callable
@@ -192,6 +194,113 @@ def workflow_step_execute(
     return build_listener_matcher(func, asyncio, base_logger)
 
 
+def function_event(
+    callback_id: Union[str, Pattern],
+    asyncio: bool = False,
+    base_logger: Optional[Logger] = None,
+) -> Union[ListenerMatcher, "AsyncListenerMatcher"]:
+    def func(body: Dict[str, Any]) -> bool:
+        return is_function(body) and _matches(callback_id, body.get("event", {}).get("function", {}).get("callback_id", ""))
+
+    return build_listener_matcher(func, asyncio, base_logger)
+
+
+# -------------
+# functions
+
+
+def _function_interactivity_match(callback_id: str, body: Dict[str, Any]) -> bool:
+    return is_function_interactivity(body) and _matches(
+        callback_id, body.get("function_data", {}).get("function", {}).get("callback_id", "")
+    )
+
+
+def function_action(
+    callback_id: str,
+    constraints: Union[str, Pattern, Dict[str, Union[str, Pattern]]],
+    asyncio: bool = False,
+    base_logger: Optional[Logger] = None,
+) -> Union[ListenerMatcher, "AsyncListenerMatcher"]:
+    if isinstance(constraints, (str, Pattern)):
+        return function_block_action(callback_id, constraints, asyncio)
+    elif "type" in constraints:
+        action_type = constraints["type"]
+        if action_type == "block_actions":
+            return function_block_action(callback_id, constraints, asyncio)
+
+        raise BoltError(f"type: {action_type} is unsupported")
+    elif "action_id" in constraints:
+        # The default value is "block_actions"
+        return function_block_action(callback_id, constraints, asyncio)
+
+    raise BoltError(f"action ({constraints}: {type(constraints)}) must be any of str, Pattern, and dict")
+
+
+def function_block_action(
+    callback_id: str,
+    constraints: Union[str, Pattern, Dict[str, Union[str, Pattern]]],
+    asyncio: bool = False,
+    base_logger: Optional[Logger] = None,
+) -> Union[ListenerMatcher, "AsyncListenerMatcher"]:
+    def func(body: Dict[str, Any]) -> bool:
+        return (
+            _function_interactivity_match(callback_id, body)
+            and is_block_actions(body)
+            and _does_block_id_match(constraints, body)
+        )
+
+    return build_listener_matcher(func, asyncio, base_logger)
+
+
+def function_view(
+    callback_id: str,
+    constraints: Union[str, Pattern, Dict[str, Union[str, Pattern]]],
+    asyncio: bool = False,
+    base_logger: Optional[Logger] = None,
+) -> Union[ListenerMatcher, "AsyncListenerMatcher"]:
+    if isinstance(constraints, (str, Pattern)):
+        return function_view_submission(callback_id, constraints, asyncio, base_logger)
+    elif "type" in constraints:
+        if constraints["type"] == "view_submission":
+            return function_view_submission(callback_id, constraints["callback_id"], asyncio, base_logger)
+        if constraints["type"] == "view_closed":
+            return function_view_closed(callback_id, constraints["callback_id"], asyncio, base_logger)
+
+    raise BoltError(f"function view ({constraints}: {type(constraints)}) must be any of str, Pattern, and dict")
+
+
+def function_view_submission(
+    function_callback_id: str,
+    callback_id: Union[str, Pattern],
+    asyncio: bool = False,
+    base_logger: Optional[Logger] = None,
+) -> Union[ListenerMatcher, "AsyncListenerMatcher"]:
+    def func(body: Dict[str, Any]) -> bool:
+        return (
+            _function_interactivity_match(function_callback_id, body)
+            and is_view_submission(body)
+            and _matches(callback_id, body["view"]["callback_id"])
+        )
+
+    return build_listener_matcher(func, asyncio, base_logger)
+
+
+def function_view_closed(
+    function_callback_id: str,
+    callback_id: Union[str, Pattern],
+    asyncio: bool = False,
+    base_logger: Optional[Logger] = None,
+) -> Union[ListenerMatcher, "AsyncListenerMatcher"]:
+    def func(body: Dict[str, Any]) -> bool:
+        return (
+            _function_interactivity_match(function_callback_id, body)
+            and is_view_closed(body)
+            and _matches(callback_id, body["view"]["callback_id"])
+        )
+
+    return build_listener_matcher(func, asyncio, base_logger)
+
+
 # -------------
 # slash commands
 
@@ -306,16 +415,7 @@ def _block_action(
     if is_block_actions(body) is False:
         return False
 
-    action = to_action(body)
-    if isinstance(constraints, (str, Pattern)):
-        action_id = constraints
-        return _matches(action_id, action["action_id"])
-    elif isinstance(constraints, dict):
-        # block_id matching is optional
-        block_id: Optional[Union[str, Pattern]] = constraints.get("block_id")
-        block_id_matched = block_id is None or _matches(block_id, action.get("block_id"))
-        action_id_matched = _matches(constraints["action_id"], action["action_id"])
-        return block_id_matched and action_id_matched
+    return _does_block_id_match(constraints, body)
 
 
 def block_action(
@@ -529,3 +629,16 @@ def _matches(str_or_pattern: Union[str, Pattern], input: Optional[str]) -> bool:
         return pattern.search(input) is not None
     else:
         raise BoltError(f"{str_or_pattern} ({type(str_or_pattern)}) must be either str or Pattern")
+
+
+def _does_block_id_match(constraints: Union[str, Pattern, Dict[str, Union[str, Pattern]]], body: Dict[str, Any]) -> bool:
+    action = to_action(body)
+    if isinstance(constraints, (str, Pattern)):
+        action_id = constraints
+        return _matches(action_id, action["action_id"])
+    elif isinstance(constraints, dict):
+        # block_id matching is optional
+        block_id: Optional[Union[str, Pattern]] = constraints.get("block_id")
+        block_id_matched = block_id is None or _matches(block_id, action.get("block_id"))
+        action_id_matched = _matches(constraints["action_id"], action["action_id"])
+        return block_id_matched and action_id_matched

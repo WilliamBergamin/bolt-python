@@ -28,6 +28,7 @@ class TestAsyncArgs:
             "ack",
             "say",
             "respond",
+            "complete",
             "next",
         ]
         arg_params: dict = build_async_required_kwargs(

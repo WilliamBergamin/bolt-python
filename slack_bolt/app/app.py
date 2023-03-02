@@ -19,6 +19,7 @@ from slack_bolt.authorization.authorize import (
     CallableAuthorize,
 )
 from slack_bolt.error import BoltError, BoltUnhandledRequestError
+from slack_bolt.slack_function import SlackFunction
 from slack_bolt.lazy_listener.thread_runner import ThreadLazyListenerRunner
 from slack_bolt.listener.builtins import TokenRevocationListeners
 from slack_bolt.listener.custom_listener import CustomListener
@@ -63,6 +64,7 @@ from slack_bolt.middleware import (
     IgnoringSelfEvents,
     CustomMiddleware,
 )
+from slack_bolt.middleware.attaching_function_token import AttachingFunctionToken
 from slack_bolt.middleware.message_listener_matches import MessageListenerMatches
 from slack_bolt.middleware.middleware_error_handler import (
     DefaultMiddlewareErrorHandler,
@@ -74,11 +76,7 @@ from slack_bolt.oauth.internals import select_consistent_installation_store
 from slack_bolt.oauth.oauth_settings import OAuthSettings
 from slack_bolt.request import BoltRequest
 from slack_bolt.response import BoltResponse
-from slack_bolt.util.utils import (
-    create_web_client,
-    get_boot_message,
-    get_name_for_callable,
-)
+from slack_bolt.util.utils import create_web_client, get_boot_message, get_name_for_callable, extract_listener_callables
 from slack_bolt.workflows.step import WorkflowStep, WorkflowStepMiddleware
 from slack_bolt.workflows.step.step import WorkflowStepBuilder
 
@@ -110,6 +108,7 @@ class App:
         ignoring_self_events_enabled: bool = True,
         ssl_check_enabled: bool = True,
         url_verification_enabled: bool = True,
+        attaching_function_token_enabled: bool = True,
         # for the OAuth flow
         oauth_settings: Optional[OAuthSettings] = None,
         oauth_flow: Optional[OAuthFlow] = None,
@@ -174,6 +173,8 @@ class App:
                 that verify the endpoint for Events API in HTTP Mode requests.
             ssl_check_enabled: bool = False if you would like to disable the built-in middleware (Default: True).
                 `SslCheck` is a built-in middleware that handles ssl_check requests from Slack.
+            attaching_function_token_enabled: False if you would like to disable the built-in middleware (Default: True).
+                `AttachingFunctionToken` is a built-in middleware that handles tokens with function requests from Slack.
             oauth_settings: The settings related to Slack app installation flow (OAuth flow)
             oauth_flow: Instantiated `slack_bolt.oauth.OAuthFlow`. This is always prioritized over oauth_settings.
             verification_token: Deprecated verification mechanism. This can used only for ssl_check requests.
@@ -327,6 +328,7 @@ class App:
             ignoring_self_events_enabled=ignoring_self_events_enabled,
             ssl_check_enabled=ssl_check_enabled,
             url_verification_enabled=url_verification_enabled,
+            attaching_function_token_enabled=attaching_function_token_enabled,
         )
 
     def _init_middleware_list(
@@ -336,6 +338,7 @@ class App:
         ignoring_self_events_enabled: bool = True,
         ssl_check_enabled: bool = True,
         url_verification_enabled: bool = True,
+        attaching_function_token_enabled: bool = True,
     ):
         if self._init_middleware_list_done:
             return
@@ -377,6 +380,8 @@ class App:
             self._middleware_list.append(IgnoringSelfEvents(base_logger=self._base_logger))
         if url_verification_enabled is True:
             self._middleware_list.append(UrlVerification(base_logger=self._base_logger))
+        if attaching_function_token_enabled is True:
+            self._middleware_list.append(AttachingFunctionToken())
         self._init_middleware_list_done = True
 
     # -------------------------
@@ -728,7 +733,7 @@ class App:
         """
 
         def __call__(*args, **kwargs):
-            functions = self._to_listener_functions(kwargs) if kwargs else list(args)
+            functions = extract_listener_callables(kwargs) if kwargs else list(args)
             primary_matcher = builtin_matchers.event(event, base_logger=self._base_logger)
             return self._register_listener(list(functions), primary_matcher, matchers, middleware, True)
 
@@ -767,7 +772,7 @@ class App:
         middleware = list(middleware) if middleware else []
 
         def __call__(*args, **kwargs):
-            functions = self._to_listener_functions(kwargs) if kwargs else list(args)
+            functions = extract_listener_callables(kwargs) if kwargs else list(args)
             constraints = {
                 "type": "message",
                 "subtype": (
@@ -791,6 +796,42 @@ class App:
             return self._register_listener(list(functions), primary_matcher, matchers, middleware, True)
 
         return __call__
+
+    def function(
+        self,
+        callback_id: str,
+        matchers: Optional[Sequence[Callable[..., bool]]] = None,
+        middleware: Optional[Sequence[Union[Callable, Middleware]]] = None,
+    ) -> Callable[..., Optional[Callable[..., Optional[BoltResponse]]]]:
+        """Registers a new Function listener.
+        This method can be used as either a decorator or a method.
+
+            # Use this method as a decorator
+            @app.function("reverse")
+            def reverse_string(event, complete: Complete):
+                try:
+                    string_to_reverse = event["inputs"]["stringToReverse"]
+                    complete(outputs={
+                        "reverseString": string_to_reverse[::-1]
+                    })
+                except Exception as e:
+                    complete(error="Cannot reverse string")
+                    raise e
+
+            # Pass a function to this method
+            app.function("reverse")(reverse_string)
+
+        To learn available arguments for middleware/listeners, see `slack_bolt.kwargs_injection.args`'s API document.
+
+        Args:
+            callback_id: The callback id to identify the function
+            matchers: A list of listener matcher functions.
+                Only when all the matchers return True, the listener function can be invoked.
+            middleware: A list of lister middleware functions.
+                Only when all the middleware call `next()` method, the listener function can be invoked.
+        """
+
+        return SlackFunction(self._register_listener, self._base_logger, callback_id, matchers, middleware)
 
     # -------------------------
     # slash commands
@@ -827,7 +868,7 @@ class App:
         """
 
         def __call__(*args, **kwargs):
-            functions = self._to_listener_functions(kwargs) if kwargs else list(args)
+            functions = extract_listener_callables(kwargs) if kwargs else list(args)
             primary_matcher = builtin_matchers.command(command, base_logger=self._base_logger)
             return self._register_listener(list(functions), primary_matcher, matchers, middleware)
 
@@ -874,7 +915,7 @@ class App:
         """
 
         def __call__(*args, **kwargs):
-            functions = self._to_listener_functions(kwargs) if kwargs else list(args)
+            functions = extract_listener_callables(kwargs) if kwargs else list(args)
             primary_matcher = builtin_matchers.shortcut(constraints, base_logger=self._base_logger)
             return self._register_listener(list(functions), primary_matcher, matchers, middleware)
 
@@ -889,7 +930,7 @@ class App:
         """Registers a new global shortcut listener."""
 
         def __call__(*args, **kwargs):
-            functions = self._to_listener_functions(kwargs) if kwargs else list(args)
+            functions = extract_listener_callables(kwargs) if kwargs else list(args)
             primary_matcher = builtin_matchers.global_shortcut(callback_id, base_logger=self._base_logger)
             return self._register_listener(list(functions), primary_matcher, matchers, middleware)
 
@@ -904,7 +945,7 @@ class App:
         """Registers a new message shortcut listener."""
 
         def __call__(*args, **kwargs):
-            functions = self._to_listener_functions(kwargs) if kwargs else list(args)
+            functions = extract_listener_callables(kwargs) if kwargs else list(args)
             primary_matcher = builtin_matchers.message_shortcut(callback_id, base_logger=self._base_logger)
             return self._register_listener(list(functions), primary_matcher, matchers, middleware)
 
@@ -944,7 +985,7 @@ class App:
         """
 
         def __call__(*args, **kwargs):
-            functions = self._to_listener_functions(kwargs) if kwargs else list(args)
+            functions = extract_listener_callables(kwargs) if kwargs else list(args)
             primary_matcher = builtin_matchers.action(constraints, base_logger=self._base_logger)
             return self._register_listener(list(functions), primary_matcher, matchers, middleware)
 
@@ -961,7 +1002,7 @@ class App:
         """
 
         def __call__(*args, **kwargs):
-            functions = self._to_listener_functions(kwargs) if kwargs else list(args)
+            functions = extract_listener_callables(kwargs) if kwargs else list(args)
             primary_matcher = builtin_matchers.block_action(constraints, base_logger=self._base_logger)
             return self._register_listener(list(functions), primary_matcher, matchers, middleware)
 
@@ -977,7 +1018,7 @@ class App:
         Refer to https://api.slack.com/legacy/message-buttons for details."""
 
         def __call__(*args, **kwargs):
-            functions = self._to_listener_functions(kwargs) if kwargs else list(args)
+            functions = extract_listener_callables(kwargs) if kwargs else list(args)
             primary_matcher = builtin_matchers.attachment_action(callback_id, base_logger=self._base_logger)
             return self._register_listener(list(functions), primary_matcher, matchers, middleware)
 
@@ -993,7 +1034,7 @@ class App:
         Refer to https://api.slack.com/dialogs for details."""
 
         def __call__(*args, **kwargs):
-            functions = self._to_listener_functions(kwargs) if kwargs else list(args)
+            functions = extract_listener_callables(kwargs) if kwargs else list(args)
             primary_matcher = builtin_matchers.dialog_submission(callback_id, base_logger=self._base_logger)
             return self._register_listener(list(functions), primary_matcher, matchers, middleware)
 
@@ -1009,7 +1050,7 @@ class App:
         Refer to https://api.slack.com/dialogs for details."""
 
         def __call__(*args, **kwargs):
-            functions = self._to_listener_functions(kwargs) if kwargs else list(args)
+            functions = extract_listener_callables(kwargs) if kwargs else list(args)
             primary_matcher = builtin_matchers.dialog_cancellation(callback_id, base_logger=self._base_logger)
             return self._register_listener(list(functions), primary_matcher, matchers, middleware)
 
@@ -1060,7 +1101,7 @@ class App:
         """
 
         def __call__(*args, **kwargs):
-            functions = self._to_listener_functions(kwargs) if kwargs else list(args)
+            functions = extract_listener_callables(kwargs) if kwargs else list(args)
             primary_matcher = builtin_matchers.view(constraints, base_logger=self._base_logger)
             return self._register_listener(list(functions), primary_matcher, matchers, middleware)
 
@@ -1076,7 +1117,7 @@ class App:
         Refer to https://api.slack.com/reference/interaction-payloads/views#view_submission for details."""
 
         def __call__(*args, **kwargs):
-            functions = self._to_listener_functions(kwargs) if kwargs else list(args)
+            functions = extract_listener_callables(kwargs) if kwargs else list(args)
             primary_matcher = builtin_matchers.view_submission(constraints, base_logger=self._base_logger)
             return self._register_listener(list(functions), primary_matcher, matchers, middleware)
 
@@ -1092,7 +1133,7 @@ class App:
         Refer to https://api.slack.com/reference/interaction-payloads/views#view_closed for details."""
 
         def __call__(*args, **kwargs):
-            functions = self._to_listener_functions(kwargs) if kwargs else list(args)
+            functions = extract_listener_callables(kwargs) if kwargs else list(args)
             primary_matcher = builtin_matchers.view_closed(constraints, base_logger=self._base_logger)
             return self._register_listener(list(functions), primary_matcher, matchers, middleware)
 
@@ -1143,7 +1184,7 @@ class App:
         """
 
         def __call__(*args, **kwargs):
-            functions = self._to_listener_functions(kwargs) if kwargs else list(args)
+            functions = extract_listener_callables(kwargs) if kwargs else list(args)
             primary_matcher = builtin_matchers.options(constraints, base_logger=self._base_logger)
             return self._register_listener(list(functions), primary_matcher, matchers, middleware)
 
@@ -1158,7 +1199,7 @@ class App:
         """Registers a new `block_suggestion` listener."""
 
         def __call__(*args, **kwargs):
-            functions = self._to_listener_functions(kwargs) if kwargs else list(args)
+            functions = extract_listener_callables(kwargs) if kwargs else list(args)
             primary_matcher = builtin_matchers.block_suggestion(action_id, base_logger=self._base_logger)
             return self._register_listener(list(functions), primary_matcher, matchers, middleware)
 
@@ -1174,7 +1215,7 @@ class App:
         Refer to https://api.slack.com/dialogs for details."""
 
         def __call__(*args, **kwargs):
-            functions = self._to_listener_functions(kwargs) if kwargs else list(args)
+            functions = extract_listener_callables(kwargs) if kwargs else list(args)
             primary_matcher = builtin_matchers.dialog_suggestion(callback_id, base_logger=self._base_logger)
             return self._register_listener(list(functions), primary_matcher, matchers, middleware)
 
@@ -1226,17 +1267,6 @@ class App:
             retry_handlers=self._client.retry_handlers.copy() if self._client.retry_handlers is not None else None,
         )
         req.context["client"] = client_per_request
-
-    @staticmethod
-    def _to_listener_functions(
-        kwargs: dict,
-    ) -> Optional[Sequence[Callable[..., Optional[BoltResponse]]]]:
-        if kwargs:
-            functions = [kwargs["ack"]]
-            for sub in kwargs["lazy"]:
-                functions.append(sub)
-            return functions
-        return None
 
     def _register_listener(
         self,
