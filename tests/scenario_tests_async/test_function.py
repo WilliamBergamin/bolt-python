@@ -207,9 +207,10 @@ wrong_id_function_body = {
 }
 
 
-async def reverse(body, event, client, context, complete):
+async def reverse(body, event, client, context, complete, inputs):
     assert body == function_body
     assert event == function_body["event"]
+    assert inputs == function_body["event"]["inputs"]
     assert context.function_execution_id == "Fx111"
     assert complete.function_execution_id == "Fx111"
     assert context.function_bot_access_token == "xwfp-valid"
